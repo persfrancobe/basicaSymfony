@@ -1,3 +1,5 @@
+
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -6,9 +8,12 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
+const $ = require('jquery');
+require('../css/bootstrap.css');
+require('../css/font-awesome.min.css');
+require('../css/icomoon-social.css');
+require('../css/main.css');
+require('../css/custom.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
