@@ -52,12 +52,12 @@ class Image
     private $ord;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\News", inversedBy="image")
+     * @ORM\ManyToOne(targetEntity="App\Entity\News", inversedBy="images")
      */
     private $news;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", inversedBy="image")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", inversedBy="images")
      */
     private $tag;
 
