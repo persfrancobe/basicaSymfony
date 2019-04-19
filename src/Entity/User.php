@@ -5,123 +5,55 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="fos_user")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $userName;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $street;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $housNo;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=True)
      */
     private $postCode;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $salt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $registration;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $unsuccessfulTestNum;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $roles = [];
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $banned;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $enabled;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $confirmationToken;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $lastLogin;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $passwordRequestedAt;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $plainPassword;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isActive;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $registrationConfig;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user")
@@ -146,6 +78,7 @@ class User
         $this->images = new ArrayCollection();
         $this->works = new ArrayCollection();
         $this->blogs = new ArrayCollection();
+        parent::__construct();
     }
 
     /**
@@ -194,26 +127,7 @@ class User
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getUserName(): ?string
-    {
-        return $this->userName;
-    }
-
-    /**
-     * @param string $userName
-     * @return \App\Entity\User
-     */
-    public function setUserName(string $userName): self
-    {
-        $this->userName = $userName;
-
-        return $this;
-    }
-
-    /**
+      /**
      * @return null|string
      */
     public function getType(): ?string
@@ -304,253 +218,6 @@ class User
     public function setPostCode(string $postCode): self
     {
         $this->postCode = $postCode;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSalt(): ?string
-    {
-        return $this->salt;
-    }
-
-    /**
-     * @param string $salt
-     * @return \App\Entity\User
-     */
-    public function setSalt(string $salt): self
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\DateTimeInterface
-     */
-    public function getRegistration(): ?\DateTimeInterface
-    {
-        return $this->registration;
-    }
-
-    /**
-     * @param \DateTimeInterface $registration
-     * @return \App\Entity\User
-     */
-    public function setRegistration(\DateTimeInterface $registration): self
-    {
-        $this->registration = $registration;
-
-        return $this;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getUnsuccessfulTestNum(): ?int
-    {
-        return $this->unsuccessfulTestNum;
-    }
-
-    /**
-     * @param int $unsuccessfulTestNum
-     * @return \App\Entity\User
-     */
-    public function setUnsuccessfulTestNum(int $unsuccessfulTestNum): self
-    {
-        $this->unsuccessfulTestNum = $unsuccessfulTestNum;
-
-        return $this;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getRoles(): ?array
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param array $roles
-     * @return \App\Entity\User
-     */
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function getBanned(): ?bool
-    {
-        return $this->banned;
-    }
-
-    /**
-     * @param bool $banned
-     * @return \App\Entity\User
-     */
-    public function setBanned(bool $banned): self
-    {
-        $this->banned = $banned;
-
-        return $this;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function getEnabled(): ?bool
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * @param bool $enabled
-     * @return \App\Entity\User
-     */
-    public function setEnabled(bool $enabled): self
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getConfirmationToken(): ?string
-    {
-        return $this->confirmationToken;
-    }
-
-    /**
-     * @param string $confirmationToken
-     * @return \App\Entity\User
-     */
-    public function setConfirmationToken(string $confirmationToken): self
-    {
-        $this->confirmationToken = $confirmationToken;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\DateTimeInterface
-     */
-    public function getLastLogin(): ?\DateTimeInterface
-    {
-        return $this->lastLogin;
-    }
-
-    /**
-     * @param \DateTimeInterface $lastLogin
-     * @return \App\Entity\User
-     */
-    public function setLastLogin(\DateTimeInterface $lastLogin): self
-    {
-        $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\DateTimeInterface
-     */
-    public function getPasswordRequestedAt(): ?\DateTimeInterface
-    {
-        return $this->passwordRequestedAt;
-    }
-
-    /**
-     * @param \DateTimeInterface $passwordRequestedAt
-     * @return \App\Entity\User
-     */
-    public function setPasswordRequestedAt(\DateTimeInterface $passwordRequestedAt): self
-    {
-        $this->passwordRequestedAt = $passwordRequestedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * @param string $plainPassword
-     * @return \App\Entity\User
-     */
-    public function setPlainPassword(string $plainPassword): self
-    {
-        $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     * @return \App\Entity\User
-     */
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function getIsActive(): ?bool
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @param bool $isActive
-     * @return \App\Entity\User
-     */
-    public function setIsActive(bool $isActive): self
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function getRegistrationConfig(): ?bool
-    {
-        return $this->registrationConfig;
-    }
-
-    /**
-     * @param bool $registrationConfig
-     * @return \App\Entity\User
-     */
-    public function setRegistrationConfig(bool $registrationConfig): self
-    {
-        $this->registrationConfig = $registrationConfig;
 
         return $this;
     }
