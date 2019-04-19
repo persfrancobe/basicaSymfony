@@ -1,0 +1,37 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "bootstrap.min": {
+      "js": [
+        "/build/runtime.js",
+        "/build/bootstrap.min.js"
+      ]
+    },
+    "jquery.easing.min": {
+      "js": [
+        "/build/runtime.js",
+        "/build/jquery.easing.min.js"
+      ]
+    },
+    "jquery-1.9.1.min": {
+      "js": [
+        "/build/runtime.js",
+        "/build/jquery-1.9.1.min.js"
+      ]
+    },
+    "scrolling-nav": {
+      "js": [
+        "/build/runtime.js",
+        "/build/scrolling-nav.js"
+      ]
+    }
+  }
+}
