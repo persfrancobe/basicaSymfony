@@ -1,13 +1,55 @@
 easy_admin:
   entities:
-    User:
-      class: App\Entity\User
+    Tag:
+      class: App\Entity\Tag
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
       form:
         fields:
-          - username
-          - email
-          - enabled
-          - lastLogin
-          # if administrators are allowed to edit users' passwords and roles, add this:
-          - { property: 'plainPassword', type: 'text', type_options: { required: false } }
-          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+          - { property: 'name'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+    Category:
+      class: App\Entity\Category
+      form:
+        fields:
+          - {property: 'name'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+    Blog:
+      class: App\Entity\Blog
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+      form:
+        fields:
+          - {property: 'name'}
+          - {property: 'title'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'suiteText',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+          - { property: 'categories'}
+    Work:
+      class: App\Entity\Work
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+      form:
+        fields:
+          - {property: 'name'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+          - { property: 'tags'}
+

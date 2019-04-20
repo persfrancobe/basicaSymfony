@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
@@ -29,37 +30,41 @@ class Work
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="work")
-     */
-    private $images;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="works")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="works")
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
-    private $User;
+    private $description;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @Gedmo\Slug(fields={"name"})
+     */
+    private $slug;
 
     /**
      * Work constructor.
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->date = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __toString()  : string
+    {
+        return $this->name;
     }
 
     /**
@@ -104,44 +109,6 @@ class Work
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     * @return \App\Entity\Work
-     */
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return \App\Entity\Work
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -220,20 +187,90 @@ class Work
     }
 
     /**
-     * @return null|\App\Entity\User
+     * @return Collection|Txt[]
      */
-    public function getUser(): ?User
+    public function getTxts(): Collection
     {
-        return $this->User;
+        return $this->txts;
     }
 
     /**
-     * @param null|\App\Entity\User $User
+     * @param \App\Entity\Txt $txt
      * @return \App\Entity\Work
      */
-    public function setUser(?User $User): self
+    public function addTxt(Txt $txt): self
     {
-        $this->User = $User;
+        if (!$this->txts->contains($txt)) {
+            $this->txts[] = $txt;
+            $txt->setWork($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \App\Entity\Txt $txt
+     * @return \App\Entity\Work
+     */
+    public function removeTxt(Txt $txt): self
+    {
+        if ($this->txts->contains($txt)) {
+            $this->txts->removeElement($txt);
+            // set the owning side to null (unless already changed)
+            if ($txt->getWork() === $this) {
+                $txt->setWork(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return null|\App\Entity\Txt
+     */
+    public function getDescription(): ?Txt
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|\App\Entity\Txt $description
+     * @return \App\Entity\Work
+     */
+    public function setDescription(?Txt $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return null|\App\Entity\Image
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param null|\App\Entity\Image $image
+     * @return \App\Entity\Work
+     */
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

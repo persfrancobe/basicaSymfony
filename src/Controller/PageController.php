@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Blog;
 use App\Entity\Page;
 use App\Form\PageType;
 use App\Repository\PageRepository;

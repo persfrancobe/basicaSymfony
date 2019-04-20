@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,36 +25,46 @@ class Category
     private $name;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", unique=true)
+     * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
-    private $images;
+    private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="Categories")
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      */
-    private $blog;
+    private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Blog", mappedBy="categories")
+     */
+    private $blogs;
 
     /**
      * Category constructor.
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
+        $this->date=new \DateTime();
+        $this->blogs = new ArrayCollection();
+
+    }
+    /**
+     * @return string
+     */
+    public function __toString() :string
+    {
+        return $this->name;
     }
 
     /**
@@ -83,26 +94,7 @@ class Category
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return \App\Entity\Category
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
+     /**
      * @return null|\DateTimeInterface
      */
     public function getDate(): ?\DateTimeInterface
@@ -180,20 +172,89 @@ class Category
     }
 
     /**
-     * @return null|\App\Entity\Blog
+     * @return Collection|Txt[]
      */
-    public function getBlog(): ?Blog
+    public function getTxts(): Collection
     {
-        return $this->blog;
+        return $this->txts;
     }
 
     /**
-     * @param null|\App\Entity\Blog $blog
+     * @param \App\Entity\Txt $txt
      * @return \App\Entity\Category
      */
-    public function setBlog(?Blog $blog): self
+    public function addTxt(Txt $txt): self
     {
-        $this->blog = $blog;
+        if (!$this->txts->contains($txt)) {
+            $this->txts[] = $txt;
+            $txt->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return null|\App\Entity\Txt
+     */
+    public function getDescription(): ?Txt
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|\App\Entity\Txt $description
+     * @return \App\Entity\Category
+     */
+    public function setDescription(?Txt $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return null|\App\Entity\Image
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param null|\App\Entity\Image $image
+     * @return \App\Entity\Category
+     */
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            $blog->removeCategory($this);
+        }
 
         return $this;
     }

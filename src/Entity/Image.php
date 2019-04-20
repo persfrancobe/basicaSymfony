@@ -3,9 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use \Symfony\Component\HttpFoundation\File\UploadedFile ;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
+ * @Vich\Uploadable
  */
 class Image
 {
@@ -17,27 +21,34 @@ class Image
     private $id;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $webPath;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $type;
 
+    // ... other fields
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="images", fileNameProperty="name")
+     *
+     * @var File|null
      */
     private $file;
 
@@ -47,39 +58,13 @@ class Image
     private $date;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $ord;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\News", inversedBy="images")
-     */
-    private $news;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", inversedBy="images")
-     */
-    private $tag;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="images")
-     */
-    private $category;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="images")
-     */
-    private $user;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="images")
-     */
-    private $blog;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Work", inversedBy="images")
-     */
-    private $work;
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * @return null|int
@@ -101,7 +86,7 @@ class Image
      * @param string $name
      * @return \App\Entity\Image
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -166,22 +151,35 @@ class Image
     }
 
     /**
-     * @return null|string
+     * @return null|File
      */
-    public function getFile(): ?string
+    public function getFile(): ?File
     {
         return $this->file;
     }
 
     /**
-     * @param string $file
-     * @return \App\Entity\Image
+     * @throws \Exception
+     *                        * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param null|File|UploadedFile $file
      */
-    public function setFile(string $file): self
+    public function setFile(?File $file = null): void
     {
         $this->file = $file;
 
-        return $this;
+        if (null !== $file) {
+            if ($this->file instanceof UploadedFile) {
+                // It is required that at least one field changes if you are using doctrine
+                // otherwise the event listeners won't be called and the file is lost
+                $this->date = new \DateTimeImmutable();
+            }
+
+        }
     }
 
     /**
@@ -218,120 +216,6 @@ class Image
     public function setOrd(int $ord): self
     {
         $this->ord = $ord;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\App\Entity\News
-     */
-    public function getNews(): ?News
-    {
-        return $this->news;
-    }
-
-    /**
-     * @param null|\App\Entity\News $news
-     * @return \App\Entity\Image
-     */
-    public function setNews(?News $news): self
-    {
-        $this->news = $news;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\App\Entity\Tag
-     */
-    public function getTag(): ?Tag
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param null|\App\Entity\Tag $tag
-     * @return \App\Entity\Image
-     */
-    public function setTag(?Tag $tag): self
-    {
-        $this->tag = $tag;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\App\Entity\Category
-     */
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param null|\App\Entity\Category $category
-     * @return \App\Entity\Image
-     */
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\App\Entity\User
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param null|\App\Entity\User $user
-     * @return \App\Entity\Image
-     */
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\App\Entity\Blog
-     */
-    public function getBlog(): ?Blog
-    {
-        return $this->blog;
-    }
-
-    /**
-     * @param null|\App\Entity\Blog $blog
-     * @return \App\Entity\Image
-     */
-    public function setBlog(?Blog $blog): self
-    {
-        $this->blog = $blog;
-
-        return $this;
-    }
-
-    /**
-     * @return null|\App\Entity\Work
-     */
-    public function getWork(): ?Work
-    {
-        return $this->work;
-    }
-
-    /**
-     * @param null|\App\Entity\Work $work
-     * @return \App\Entity\Image
-     */
-    public function setWork(?Work $work): self
-    {
-        $this->work = $work;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
@@ -19,29 +20,15 @@ class Tag
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=55)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", unique=true)
+     * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="tag")
-     */
-    private $images;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Work", mappedBy="tags")
@@ -49,12 +36,35 @@ class Tag
     private $works;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     */
+    private $Description;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     */
+    private $Image;
+
+    /**
      * Tag constructor.
      */
     public function __construct()
     {
-        $this->image = new ArrayCollection();
         $this->works = new ArrayCollection();
+        $this->date=new  \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __toString()  : string
+    {
+        return $this->name;
     }
 
     /**
@@ -63,44 +73,6 @@ class Tag
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     * @return \App\Entity\Tag
-     */
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return \App\Entity\Tag
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     /**
@@ -142,45 +114,6 @@ class Tag
     }
 
     /**
-     * @return Collection|Images[]
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    /**
-     * @param \App\Entity\Image $image
-     * @return \App\Entity\Tag
-     */
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setTag($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Image $image
-     * @return \App\Entity\Tag
-     */
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
-            if ($image->getTag() === $this) {
-                $image->setTag(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Work[]
      */
     public function getWorks(): Collection
@@ -212,6 +145,102 @@ class Tag
             $this->works->removeElement($work);
             $work->removeTag($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Txt[]
+     */
+    public function getTxts(): Collection
+    {
+        return $this->txts;
+    }
+
+    /**
+     * @param \App\Entity\Txt $txt
+     * @return \App\Entity\Tag
+     */
+    public function addTxt(Txt $txt): self
+    {
+        if (!$this->txts->contains($txt)) {
+            $this->txts[] = $txt;
+            $txt->setTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \App\Entity\Txt $txt
+     * @return \App\Entity\Tag
+     */
+    public function removeTxt(Txt $txt): self
+    {
+        if ($this->txts->contains($txt)) {
+            $this->txts->removeElement($txt);
+            // set the owning side to null (unless already changed)
+            if ($txt->getTag() === $this) {
+                $txt->setTag(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return \App\Entity\Tag
+     */
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return null|\App\Entity\Txt
+     */
+    public function getDescription(): ?Txt
+    {
+        return $this->Description;
+    }
+
+    /**
+     * @param null|\App\Entity\Txt $Description
+     * @return \App\Entity\Tag
+     */
+    public function setDescription(?Txt $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    /**
+     * @return null|\App\Entity\Image
+     */
+    public function getImage(): ?Image
+    {
+        return $this->Image;
+    }
+
+    /**
+     * @param null|\App\Entity\Image $Image
+     * @return \App\Entity\Tag
+     */
+    public function setImage(?Image $Image): self
+    {
+        $this->Image = $Image;
 
         return $this;
     }
