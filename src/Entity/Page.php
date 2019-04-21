@@ -40,14 +40,28 @@ class Page
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=55)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\Column(nullable=true)
      */
-    private $type;
+    private $description;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\Column(nullable=true)
      */
-    private $description;
+    private $bigTitle;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\Column(nullable=true)
+     */
+    private $title;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\Column(nullable=true)
+     */
+    private $subtitle;
 
     /**
      * @ORM\Column(type="text")
@@ -61,6 +75,61 @@ class Page
     {
         $this->date=new \DateTime();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBigTitle()
+    {
+        return $this->bigTitle;
+    }
+
+    /**
+     * @param mixed $bigTitle
+     * @return Page
+     */
+    public function setBigTitle($bigTitle)
+    {
+        $this->bigTitle = $bigTitle;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     * @return Page
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * @param mixed $subtitle
+     * @return Page
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+        return $this;
+    }
+
 
     /**
      * @return null|int

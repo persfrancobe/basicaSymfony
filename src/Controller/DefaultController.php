@@ -4,14 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Blog;
 use App\Entity\Category;
-use App\Entity\Image;
 use App\Entity\News;
 use App\Entity\Page;
-use App\Entity\Txt;
-use App\Form\PageType;
-use App\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,11 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/", name="app_homepage", methods={"GET"})
+     * @Route("/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"},defaults={"id"=1,"slug"="home"})
      */
-    public function index(): Response
+    public function show(Page $page): Response
     {
-        return $this->render('page/index.html.twig');
+        return $this->render('page/show.html.twig',['page'=>$page]);
     }
 
     /**

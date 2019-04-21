@@ -71,12 +71,14 @@ easy_admin:
           - {property: 'id'}
           - {property: 'name'}
           - {property: 'url'}
-          - {property: 'type'}
       form:
         fields:
           - {property: 'name'}
           - {property: 'url'}
           - {property: 'content'}
+          - { property: 'bigTitle',type: 'App\Form\TxtType'}
+          - { property: 'title',type: 'App\Form\TxtType'}
+          - { property: 'subtitle',type: 'App\Form\TxtType'}
           - { property: 'description',type: 'App\Form\TxtType'}
     News:
       class: App\Entity\News
