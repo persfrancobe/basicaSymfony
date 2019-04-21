@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block title %} Home {% endblock %}
-
-{% block body %}
-{{ render(controller('App\\Controller\\DefaultController::slider')) }}
-{{ render(controller('App\\Controller\\WorkController::last')) }}
-{{ render(controller('App\\Controller\\DefaultController::lastBlogNews')) }}
-{% endblock %}

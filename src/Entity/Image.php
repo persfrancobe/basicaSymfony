@@ -61,6 +61,10 @@ class Image
      * @ORM\Column(type="integer", nullable=true)
      */
     private $ord;
+
+    /**
+     * @return null|string
+     */
     public function __toString()
     {
         return $this->name;

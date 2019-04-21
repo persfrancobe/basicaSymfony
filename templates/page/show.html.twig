@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+    {% if page.bigTitle %}
+        <!-- Page Title -->
+        <div class="section section-breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{{page.bigTitle}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if page.title or page.subtitle or page.description %}
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>{{page.title ??''}}</h2>
+                        <h3>{{page.subtitle ?? ''}}</h3>
+                        <p>{{ page.description ?? '' }} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% autoescape %}
+        {{ page.content| raw }}
+    {% endautoescape %}
+{% endblock %}
