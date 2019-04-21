@@ -17,11 +17,6 @@ class Txt
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $locale;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $en;
@@ -51,9 +46,34 @@ class Txt
      */
     private $sp;
 
-    public function __toString()
+    /**
+     * @ORM\Column(type="string",length=55,nullable=true)
+     */
+    private $type;
+
+    /**
+     * @return string
+     */
+    public function __toString() : string
     {
         return $this->fr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType():string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param $type
+     * @return string
+     */
+    public function setType($type): string
+    {
+        $this->type = $type;
     }
 
     /**
@@ -64,23 +84,21 @@ class Txt
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getLocale(): ?string
-    {
-        return $this->locale;
-    }
 
     /**
      * @param string $locale
-     * @return \App\Entity\Txt
+     * @return null|string
      */
-    public function setLocale(string $locale): self
+    public function getContent(string $locale='fr'): ?string
     {
-        $this->locale = $locale;
-
-        return $this;
+        switch ($locale){
+            case 'fr':return $this->fr;break;
+            case 'en':return $this->en;break;
+            case 'nl':return $this->nl;break;
+            case 'it':return $this->it;break;
+            case 'sp':return $this->sp;break;
+            default:return $this->fr;break;
+        }
     }
 
     /**

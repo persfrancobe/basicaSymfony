@@ -31,7 +31,7 @@ class Blog
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="blog")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $comments;
 
@@ -71,7 +71,7 @@ class Blog
      */
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        $this->comments = rand(2,45);
         $this->Categories = new ArrayCollection();
         $this->date=new \DateTime();
         $this->categories = new ArrayCollection();
@@ -132,42 +132,19 @@ class Blog
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return mixed
      */
-    public function getComments(): Collection
+    public function getComments()
     {
         return $this->comments;
     }
 
     /**
-     * @param \App\Entity\Comment $comment
-     * @return \App\Entity\Blog
+     * @param mixed $comments
      */
-    public function addComment(Comment $comment): self
+    public function setComments($comments): void
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setBlog($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Comment $comment
-     * @return \App\Entity\Blog
-     */
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-            // set the owning side to null (unless already changed)
-            if ($comment->getBlog() === $this) {
-                $comment->setBlog(null);
-            }
-        }
-
-        return $this;
+        $this->comments = $comments;
     }
 
     /**
