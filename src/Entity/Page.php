@@ -50,6 +50,11 @@ class Page
     private $description;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $content;
+
+    /**
      * Page constructor.
      */
     public function __construct()
@@ -214,6 +219,18 @@ class Page
     public function setDescription(?Txt $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }

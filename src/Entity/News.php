@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,14 +17,9 @@ class News
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=55)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
 
     /**
      * @ORM\Column(type="datetime")
@@ -34,26 +27,17 @@ class News
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=55)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
-    private $type;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $slug;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="news")
-     */
-    private $images;
+    private $description;
 
     /**
      * News constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
+        $this->date=new \DateTime();
     }
 
     /**
@@ -84,25 +68,6 @@ class News
     }
 
     /**
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return \App\Entity\News
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
      * @return null|\DateTimeInterface
      */
     public function getDate(): ?\DateTimeInterface
@@ -122,78 +87,20 @@ class News
     }
 
     /**
-     * @return null|string
+     * @return null|\App\Entity\Txt
      */
-    public function getType(): ?string
+    public function getDescription(): ?Txt
     {
-        return $this->type;
+        return $this->description;
     }
 
     /**
-     * @param string $type
+     * @param null|\App\Entity\Txt $description
      * @return \App\Entity\News
      */
-    public function setType(string $type): self
+    public function setDescription(?Txt $description): self
     {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     * @return \App\Entity\News
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Images[]
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    /**
-     * @param \App\Entity\Image $image
-     * @return \App\Entity\News
-     */
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setNews($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Image $image
-     * @return \App\Entity\News
-     */
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
-            if ($image->getNews() === $this) {
-                $image->setNews(null);
-            }
-        }
+        $this->description = $description;
 
         return $this;
     }
