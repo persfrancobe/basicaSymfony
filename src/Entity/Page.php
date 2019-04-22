@@ -41,25 +41,21 @@ class Page
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @ORM\Column(nullable=true)
      */
     private $description;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @ORM\Column(nullable=true)
      */
     private $bigTitle;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @ORM\Column(nullable=true)
      */
     private $title;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @ORM\Column(nullable=true)
      */
     private $subtitle;
 
@@ -230,45 +226,6 @@ class Page
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Txt[]
-     */
-    public function getTxts(): Collection
-    {
-        return $this->txts;
-    }
-
-    /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Page
-     */
-    public function addTxt(Txt $txt): self
-    {
-        if (!$this->txts->contains($txt)) {
-            $this->txts[] = $txt;
-            $txt->setPage($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Page
-     */
-    public function removeTxt(Txt $txt): self
-    {
-        if ($this->txts->contains($txt)) {
-            $this->txts->removeElement($txt);
-            // set the owning side to null (unless already changed)
-            if ($txt->getPage() === $this) {
-                $txt->setPage(null);
-            }
-        }
 
         return $this;
     }
