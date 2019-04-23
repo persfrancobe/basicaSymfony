@@ -1,39 +1,25 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Work index{% endblock %}
-
 {% block body %}
-    <h1>Work index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Slug</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for work in works %}
-            <tr>
-                <td>{{ work.id }}</td>
-                <td>{{ work.name }}</td>
-                <td>{{ work.date ? work.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ work.slug }}</td>
-                <td>
-                    <a href="{{ path('work_show', {'id': work.id}) }}">show</a>
-                    <a href="{{ path('work_edit', {'id': work.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('work_new') }}">Create new</a>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <ul class="grid cs-style-2">
+                    {% for work in works %}
+                        <div class="col-md-4 col-sm-6">
+                            <figure>
+                                <img src="{{asset('uploads/img/'~work.image)}}" alt="{{work.slug.content}}">
+                                <figcaption>
+                                    <h3>{{work.name.content}}</h3>
+                                    <span>{{work.description.content|slice(0,31)}}</span>
+                                    <a href="{{path('app_work_show',{id:work.id,slug:work.slug})}}">Take a look</a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+            <ul class="pager">
+                <li><a href="#">More works</a></li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

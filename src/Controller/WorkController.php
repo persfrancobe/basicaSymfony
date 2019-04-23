@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/work")
+ * @Route("/work",name="app_work_")
  */
 class WorkController extends AbstractController
 {
     /**
-     * @Route("/", name="work_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(WorkRepository $workRepository): Response
     {
@@ -26,7 +26,7 @@ class WorkController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="work_show", methods={"GET"})
+     * @Route("/{id}-{slug}", name="show", methods={"GET"})
      */
     public function show(Work $work): Response
     {
@@ -42,5 +42,17 @@ class WorkController extends AbstractController
     {
         $last_Works=$this->getDoctrine()->getRepository(Work::class)->findBy([],['date'=>'DESC'],6);
         return $this->render('work/_last-works.html.twig',['last_works'=>$last_Works]);
+    }
+
+
+    /**
+     * @param $entity
+     * @param $route
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function similarWorks($entity, $route): Response
+    {
+        $sim=$this->getDoctrine()->getRepository(Work::class)->findByTags($entity->getTags());
+        return $this->render('partials/_similars.html.twig',['entities'=>$sim,'route'=>$route]);
     }
 }

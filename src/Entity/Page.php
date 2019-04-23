@@ -2,8 +2,7 @@
 
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,13 +18,13 @@ class Page
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=55)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Gedmo\Slug(fields={"name"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
      */
     private $slug;
 
@@ -60,7 +59,7 @@ class Page
     private $subtitle;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $content;
 
@@ -138,44 +137,6 @@ class Page
     /**
      * @return null|string
      */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return \App\Entity\Page
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     * @return \App\Entity\Page
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
     public function getUrl(): ?string
     {
         return $this->url;
@@ -230,6 +191,7 @@ class Page
         return $this;
     }
 
+
     /**
      * @return null|\App\Entity\Txt
      */
@@ -249,15 +211,55 @@ class Page
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return null|Page
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
 }

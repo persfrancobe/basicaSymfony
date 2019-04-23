@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
@@ -25,8 +25,9 @@ class Tag
     private $date;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Gedmo\Slug(fields={"name"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     *  @Assert\NotBlank()
+     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/",message="slug peut contenir que des lettre et des chifres et tire merci")
      */
     private $slug;
 
@@ -36,7 +37,7 @@ class Tag
     private $works;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -64,7 +65,7 @@ class Tag
      */
     public function __toString()  : string
     {
-        return $this->name;
+        return $this->getName();
     }
 
     /**
@@ -90,25 +91,6 @@ class Tag
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     * @return \App\Entity\Tag
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }
@@ -150,64 +132,6 @@ class Tag
     }
 
     /**
-     * @return Collection|Txt[]
-     */
-    public function getTxts(): Collection
-    {
-        return $this->txts;
-    }
-
-    /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Tag
-     */
-    public function addTxt(Txt $txt): self
-    {
-        if (!$this->txts->contains($txt)) {
-            $this->txts[] = $txt;
-            $txt->setTag($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Tag
-     */
-    public function removeTxt(Txt $txt): self
-    {
-        if ($this->txts->contains($txt)) {
-            $this->txts->removeElement($txt);
-            // set the owning side to null (unless already changed)
-            if ($txt->getTag() === $this) {
-                $txt->setTag(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return \App\Entity\Tag
-     */
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
      * @return null|\App\Entity\Txt
      */
     public function getDescription(): ?Txt
@@ -244,4 +168,37 @@ class Tag
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
 }

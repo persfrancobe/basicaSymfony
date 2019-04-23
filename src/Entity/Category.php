@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,7 +20,7 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -30,8 +30,8 @@ class Category
     private $date;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Gedmo\Slug(fields={"name"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
      */
     private $slug;
 
@@ -59,6 +59,7 @@ class Category
         $this->blogs = new ArrayCollection();
 
     }
+
     /**
      * @return string
      */
@@ -74,26 +75,6 @@ class Category
     {
         return $this->id;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return \App\Entity\Category
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
      /**
      * @return null|\DateTimeInterface
      */
@@ -109,25 +90,6 @@ class Category
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     * @return \App\Entity\Category
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }
@@ -180,20 +142,6 @@ class Category
     }
 
     /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Category
-     */
-    public function addTxt(Txt $txt): self
-    {
-        if (!$this->txts->contains($txt)) {
-            $this->txts[] = $txt;
-            $txt->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return null|\App\Entity\Txt
      */
     public function getDescription(): ?Txt
@@ -239,6 +187,10 @@ class Category
         return $this->blogs;
     }
 
+    /**
+     * @param \App\Entity\Blog $blog
+     * @return \App\Entity\Category
+     */
     public function addBlog(Blog $blog): self
     {
         if (!$this->blogs->contains($blog)) {
@@ -249,6 +201,10 @@ class Category
         return $this;
     }
 
+    /**
+     * @param \App\Entity\Blog $blog
+     * @return \App\Entity\Category
+     */
     public function removeBlog(Blog $blog): self
     {
         if ($this->blogs->contains($blog)) {
@@ -258,4 +214,37 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
 }

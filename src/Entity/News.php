@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
@@ -17,7 +18,7 @@ class News
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $title;
 
@@ -32,6 +33,11 @@ class News
     private $description;
 
     /**
+     *@ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     */
+    private $slug;
+
+    /**
      * News constructor.
      * @throws \Exception
      */
@@ -41,67 +47,83 @@ class News
     }
 
     /**
-     * @return null|int
+     * @return mixed
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return null|string
+     * @param mixed $id
      */
-    public function getTitle(): ?string
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
-     * @return \App\Entity\News
+     * @param mixed $title
      */
-    public function setTitle(string $title): self
+    public function setTitle($title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     /**
-     * @return null|\DateTimeInterface
+     * @return mixed
      */
-    public function getDate(): ?\DateTimeInterface
+    public function getDate()
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTimeInterface $date
-     * @return \App\Entity\News
+     * @param mixed $date
      */
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate($date): void
     {
         $this->date = $date;
-
-        return $this;
     }
 
     /**
-     * @return null|\App\Entity\Txt
+     * @return mixed
      */
-    public function getDescription(): ?Txt
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param null|\App\Entity\Txt $description
-     * @return \App\Entity\News
+     * @param mixed $description
      */
-    public function setDescription(?Txt $description): self
+    public function setDescription($description): void
     {
         $this->description = $description;
-
-        return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
 }

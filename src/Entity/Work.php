@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
@@ -20,7 +20,7 @@ class Work
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     *@ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -45,10 +45,15 @@ class Work
     private $image;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Gedmo\Slug(fields={"name"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
      */
     private $slug;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="works")
+     */
+    private $user;
 
     /**
      * Work constructor.
@@ -75,26 +80,7 @@ class Work
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return \App\Entity\Work
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
+     /**
      * @return null|\DateTimeInterface
      */
     public function getDate(): ?\DateTimeInterface
@@ -187,45 +173,6 @@ class Work
     }
 
     /**
-     * @return Collection|Txt[]
-     */
-    public function getTxts(): Collection
-    {
-        return $this->txts;
-    }
-
-    /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Work
-     */
-    public function addTxt(Txt $txt): self
-    {
-        if (!$this->txts->contains($txt)) {
-            $this->txts[] = $txt;
-            $txt->setWork($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Txt $txt
-     * @return \App\Entity\Work
-     */
-    public function removeTxt(Txt $txt): self
-    {
-        if ($this->txts->contains($txt)) {
-            $this->txts->removeElement($txt);
-            // set the owning side to null (unless already changed)
-            if ($txt->getWork() === $this) {
-                $txt->setWork(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return null|\App\Entity\Txt
      */
     public function getDescription(): ?Txt
@@ -263,15 +210,55 @@ class Work
         return $this;
     }
 
-    public function getSlug(): ?string
+    /**
+     * @return null|\App\Entity\User
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param null|\App\Entity\User $user
+     * @return \App\Entity\Work
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
     {
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
-
-        return $this;
     }
+
 }

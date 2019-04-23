@@ -19,6 +19,23 @@ class BlogRepository extends ServiceEntityRepository
         parent::__construct($registry, Blog::class);
     }
 
+    public function findByCategories($array)
+    {
+        $qb=$this->createQueryBuilder('b')
+            ->leftJoin('b.categories','c')
+            ->addSelect('c');
+        if(is_iterable($array)){
+            foreach ($array as $value) {
+                $qb->andWhere(':val MEMBER OF b.categories')->setParameter('val', $value);
+            }
+        }else{
+            $qb->orderBy('count(b.categories)')
+                ->andWhere(':val MEMBER OF w.tags')->setParameter('val', $array);
+        }
+        return $qb->getQuery() ->getResult();
+
+    }
+
     // /**
     //  * @return Blog[] Returns an array of Blog objects
     //  */

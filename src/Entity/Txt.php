@@ -17,7 +17,7 @@ class Txt
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $en;
 
@@ -47,33 +47,11 @@ class Txt
     private $sp;
 
     /**
-     * @ORM\Column(type="string",length=55,nullable=true)
-     */
-    private $type;
-
-    /**
      * @return string
      */
     public function __toString() : string
     {
-        return $this->fr;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType():string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param $type
-     * @return string
-     */
-    public function setType($type): string
-    {
-        $this->type = $type;
+        return $this->getContent();
     }
 
     /**

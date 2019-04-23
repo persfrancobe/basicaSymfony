@@ -6,7 +6,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogRepository")
@@ -21,7 +21,7 @@ class Blog
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -31,18 +31,17 @@ class Blog
     private $date;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $comments;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Gedmo\Slug(fields={"name"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
      */
     private $title;
 
@@ -72,7 +71,6 @@ class Blog
     public function __construct()
     {
         $this->comments = rand(2,45);
-        $this->Categories = new ArrayCollection();
         $this->date=new \DateTime();
         $this->categories = new ArrayCollection();
     }
@@ -91,25 +89,6 @@ class Blog
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return \App\Entity\Blog
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -148,41 +127,51 @@ class Blog
     }
 
     /**
-     * @return null|string
+     * @return mixed
      */
-    public function getSlug(): ?string
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
     {
         return $this->slug;
     }
 
     /**
-     * @param string $slug
-     * @return \App\Entity\Blog
+     * @param mixed $slug
      */
-    public function setSlug(string $slug): self
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
-
-        return $this;
     }
 
     /**
-     * @return null|string
+     * @return mixed
      */
-    public function getTitle(): ?string
+    public function getTitle()
     {
         return $this->title;
     }
 
     /**
-     * @param null|string $title
-     * @return \App\Entity\Blog
+     * @param mixed $title
      */
-    public function setTitle(?string $title): self
+    public function setTitle($title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     /**
@@ -250,6 +239,10 @@ class Blog
         return $this->categories;
     }
 
+    /**
+     * @param \App\Entity\Category $category
+     * @return \App\Entity\Blog
+     */
     public function addCategory(Category $category): self
     {
         if (!$this->categories->contains($category)) {
@@ -259,6 +252,10 @@ class Blog
         return $this;
     }
 
+    /**
+     * @param \App\Entity\Category $category
+     * @return \App\Entity\Blog
+     */
     public function removeCategory(Category $category): self
     {
         if ($this->categories->contains($category)) {

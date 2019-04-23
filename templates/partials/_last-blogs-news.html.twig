@@ -7,11 +7,11 @@
                 <h2>Latest Blog Posts</h2>
                 {% for blog in blogs %}
                 <div class="row">
-                    <div class="col-xs-4"><a href="#"><img src="{{ asset('uploads/img/'~blog.image) }}" alt="{{blog.title}}"></a></div>
+                    <div class="col-xs-4"><a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}"><img src="{{ asset('uploads/img/'~blog.image) }}" alt="{{blog.title}}"></a></div>
                     <div class="col-xs-8">
                         <div class="caption"><a href="#">{{blog.title}}</a></div>
                         <div class="date">{{blog.date|date('D F, Y')}} </div>
-                        <div class="intro">{{ blog.description|slice(0,100)}}...<a href="#">Read more...</a></div>
+                        <div class="intro">{{ blog.description|slice(0,100)}}...<a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}">Read more...</a></div>
                     </div>
                 </div>
                 {% endfor %}
