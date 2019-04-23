@@ -29,16 +29,6 @@ class Image
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $webPath;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $type;
 
     // ... other fields
@@ -58,13 +48,9 @@ class Image
     private $date;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $ord;
-
-    /**
      * @return null|string
      */
+
     public function __toString()
     {
         return $this->name;
@@ -93,44 +79,6 @@ class Image
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getWebPath(): ?string
-    {
-        return $this->webPath;
-    }
-
-    /**
-     * @param string $webPath
-     * @return \App\Entity\Image
-     */
-    public function setWebPath(string $webPath): self
-    {
-        $this->webPath = $webPath;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     * @return \App\Entity\Image
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }
@@ -201,25 +149,6 @@ class Image
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getOrd(): ?int
-    {
-        return $this->ord;
-    }
-
-    /**
-     * @param int $ord
-     * @return \App\Entity\Image
-     */
-    public function setOrd(int $ord): self
-    {
-        $this->ord = $ord;
 
         return $this;
     }

@@ -10,14 +10,16 @@ easy_admin:
           - { property: 'image', type: 'image', base_path: '%app.path.images%' }
       form:
         fields:
-          - { property: 'name'}
+          - { property: 'name',type: 'App\Form\TxtType'}
+          - { property: 'slug',type: 'App\Form\TxtType'}
           - { property: 'description',type: 'App\Form\TxtType'}
           - { property: 'image',type: 'App\Form\ImageType'}
     Category:
       class: App\Entity\Category
       form:
         fields:
-          - {property: 'name'}
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
           - { property: 'description',type: 'App\Form\TxtType'}
           - { property: 'image',type: 'App\Form\ImageType'}
       list:
@@ -34,8 +36,9 @@ easy_admin:
           - { property: 'image', type: 'image', base_path: '%app.path.images%' }
       form:
         fields:
-          - {property: 'name'}
-          - {property: 'title'}
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
+          - {property: 'title',type: 'App\Form\TxtType'}
           - { property: 'description',type: 'App\Form\TxtType'}
           - { property: 'suiteText',type: 'App\Form\TxtType'}
           - { property: 'image',type: 'App\Form\ImageType'}
@@ -49,10 +52,12 @@ easy_admin:
           - { property: 'image', type: 'image', base_path: '%app.path.images%' }
       form:
         fields:
-          - {property: 'name'}
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
           - { property: 'description',type: 'App\Form\TxtType'}
           - { property: 'image',type: 'App\Form\ImageType'}
           - { property: 'tags'}
+          - { property: 'user'}
     Image:
       class: App\Entity\Image
       list:
@@ -73,7 +78,8 @@ easy_admin:
           - {property: 'url'}
       form:
         fields:
-          - {property: 'name'}
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
           - {property: 'url'}
           - {property: 'content'}
           - { property: 'bigTitle',type: 'App\Form\TxtType'}
@@ -88,7 +94,8 @@ easy_admin:
           - {property: 'title'}
       form:
         fields:
-          - {property: 'title'}
+          - {property: 'title',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
           - {property: 'description',type: 'App\Form\TxtType'}
 
 

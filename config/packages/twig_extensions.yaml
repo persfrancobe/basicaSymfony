@@ -3,7 +3,7 @@ services:
         public: false
         autowire: true
         autoconfigure: true
-
+    Twig\Extension\StringLoaderExtension: ~
     # Uncomment any lines below to activate that Twig extension
     #Twig\Extensions\ArrayExtension: ~
     #Twig\Extensions\DateExtension: ~

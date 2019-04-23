@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} Home {% endblock %}
+{% block title %}{{ page.name }}{% endblock %}
 {% block body %}
     {% if page.bigTitle %}
         <!-- Page Title -->
@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>{{page.bigTitle}}</h1>
+                        <h1>{{page.bigTitle.content}}</h1>
                     </div>
                 </div>
             </div>
@@ -18,15 +18,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2>{{page.title ??''}}</h2>
-                        <h3>{{page.subtitle ?? ''}}</h3>
-                        <p>{{ page.description ?? '' }} </p>
+                        <h2>{{page.title.content ??''}}</h2>
+                        <h3>{{page.subtitle.content ?? ''}}</h3>
+                        <p>{{ page.description.content ?? '' }} </p>
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
-    {% autoescape %}
-        {{ page.content| raw }}
-    {% endautoescape %}
+{{include(template_from_string(page.content))}}
 {% endblock %}

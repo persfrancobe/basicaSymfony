@@ -5,14 +5,13 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <html lang="en">
 <head>
-	{% block title %}{% endblock %}
     {% include 'partials/_head.html.twig' with { title: block('title') }%}
 </head>
 <body>
 	<!--[if lt IE 7]>
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 	<![endif]-->
-	{{ render(controller('App\\Controller\\DefaultController::nav',{app:app})) }}
+	{{ render(controller('App\\Controller\\DefaultController::nav',{slug:app.request.attributes})) }}
 	{% block body %}{% endblock %}
 	{% include 'partials/_footer.html.twig' %}
 </body>

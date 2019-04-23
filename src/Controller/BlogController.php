@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/blog")
+ * @Route("/blog",name="app_blog_")
  */
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/", name="blog_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(BlogRepository $blogRepository): Response
     {
@@ -26,30 +26,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="blog_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $blog = new Blog();
-        $form = $this->createForm(BlogType::class, $blog);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($blog);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('blog_index');
-        }
-
-        return $this->render('blog/new.html.twig', [
-            'blog' => $blog,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="blog_show", methods={"GET"})
+     * @Route("/{id}-{slug}", name="show", methods={"GET"})
      */
     public function show(Blog $blog): Response
     {
@@ -59,38 +36,13 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="blog_edit", methods={"GET","POST"})
+     * @param $entity
+     * @param $route
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Request $request, Blog $blog): Response
+    public function similarBlogs(Blog $entity,string $route): Response
     {
-        $form = $this->createForm(BlogType::class, $blog);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('blog_index', [
-                'id' => $blog->getId(),
-            ]);
-        }
-
-        return $this->render('blog/edit.html.twig', [
-            'blog' => $blog,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="blog_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Blog $blog): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$blog->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($blog);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('blog_index');
+        $sim=$this->getDoctrine()->getRepository(Blog::class)->findByCategories($entity->getCategories());
+        return $this->render('partials/_similars.html.twig',['entities'=>$sim,'route'=>$route]);
     }
 }
