@@ -15,8 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoryController extends AbstractController
 {
+
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @param \App\Repository\CategoryRepository $categoryRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -25,8 +28,11 @@ class CategoryController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}-{slug}", name="show", methods={"GET"})
+     * @Route("/{id}-{slug}", name="show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"})
+     * @param \App\Entity\Category $category
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Category $category): Response
     {

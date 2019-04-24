@@ -15,18 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TagController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
-    public function index(TagRepository $tagRepository): Response
-    {
-        return $this->render('tag/index.html.twig', [
-            'tags' => $tagRepository->findAll(),
-        ]);
-    }
 
     /**
-     * @Route("/{id}-{slug}", name="show", methods={"GET"})
+     * @Route("/{id}-{slug}", name="show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"})
+     * @param \App\Entity\Tag $tag
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Tag $tag): Response
     {

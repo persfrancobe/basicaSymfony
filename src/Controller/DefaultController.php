@@ -17,8 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DefaultController extends AbstractController
 {
+
     /**
-     * @Route("/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"},defaults={"id"=1,"slug"="home"})
+     *  @Route("/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"},defaults={"id"=1,"slug"="home"})
+     * @param \App\Entity\Page $page
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Page $page): Response
     {
@@ -52,6 +55,10 @@ class DefaultController extends AbstractController
         $blogs=$this->getDoctrine()->getRepository(Blog::class)->findBy([],['date'=>'DESC'],3);
         return $this->render('partials/_last-blogs-news.html.twig',['news'=>$news,'blogs'=>$blogs]);
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function sidebar():Response
     {
         $tags=$this->getDoctrine()->getRepository(Tag::class)->findAll();

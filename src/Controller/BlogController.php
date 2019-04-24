@@ -15,8 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BlogController extends AbstractController
 {
+
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @param \App\Repository\BlogRepository $blogRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(BlogRepository $blogRepository): Response
     {
@@ -25,8 +28,11 @@ class BlogController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}-{slug}", name="show", methods={"GET"})
+     * @Route("/{id}-{slug}", name="show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"})
+     * @param \App\Entity\Blog $blog
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Blog $blog): Response
     {

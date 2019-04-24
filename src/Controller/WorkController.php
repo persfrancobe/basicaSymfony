@@ -15,8 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WorkController extends AbstractController
 {
+
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @param \App\Repository\WorkRepository $workRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(WorkRepository $workRepository): Response
     {
@@ -26,7 +29,9 @@ class WorkController extends AbstractController
     }
 
     /**
-     * @Route("/{id}-{slug}", name="show", methods={"GET"})
+     * @Route("/{id}-{slug}", name="show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"})
+     * @param \App\Entity\Work $work
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Work $work): Response
     {
@@ -46,11 +51,11 @@ class WorkController extends AbstractController
 
 
     /**
-     * @param $entity
-     * @param $route
+     * @param \App\Entity\Work $entity
+     * @param string           $route
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function similarWorks($entity, $route): Response
+    public function similarWorks(Work $entity, string $route): Response
     {
         $sim=$this->getDoctrine()->getRepository(Work::class)->findByTags($entity->getTags());
         return $this->render('partials/_similars.html.twig',['entities'=>$sim,'route'=>$route]);
