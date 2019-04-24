@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %}Blog-{{ blog.name.content }}{% endblock %}
+{% block body %}
+    <div class="section section-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{blog.name.content}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <!-- Blog Post -->
+                <div class="col-sm-8">
+                    <div class="blog-post blog-single-post">
+                        <div class="single-post-title">
+                            <h2>{{ blog.title.content }}</h2>
+                        </div>
+                        <div class="single-post-image">
+                            <img src="{{asset('uploads/img/'~blog.image)}}" alt="{{blog.name.content}}">
+                        </div>
+                        <div class="single-post-info">
+                            <i class="glyphicon glyphicon-time"></i>{{blog.date|date('d F , Y')}} <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>{{blog.comments}}</a>
+                        </div>
+                        <div class="single-post-content">
+                            <p>{{blog.description.content}}</p>
+                            <p>{{blog.suiteText.content}}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Blog Post -->
+                <!-- Sidebar -->
+                {{render(controller('App\\Controller\\DefaultController::sidebar'))}}
+                <!-- End Sidebar -->
+            </div>
+        </div>
+    </div>
+    {{ render(controller('App\\Controller\\BlogController::similarBlogs',{'entity':blog,'route':app.request.attributes.get('_route')})) }}
+{% endblock %}

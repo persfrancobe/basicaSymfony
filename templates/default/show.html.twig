@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ page.name }}{% endblock %}
+{% block body %}
+    {% if page.bigTitle %}
+        <!-- Page Title -->
+        <div class="section section-breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{{page.bigTitle.content}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if page.title or page.subtitle or page.description %}
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>{{page.title.content ??''}}</h2>
+                        <h3>{{page.subtitle.content ?? ''}}</h3>
+                        <p>{{ page.description.content ?? '' }} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{{include(template_from_string(page.content))}}
+{% endblock %}

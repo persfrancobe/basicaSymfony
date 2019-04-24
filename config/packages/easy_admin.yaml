@@ -1,0 +1,101 @@
+easy_admin:
+  site_name: 'Basica'
+  entities:
+    Tag:
+      class: App\Entity\Tag
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+      form:
+        fields:
+          - { property: 'name',type: 'App\Form\TxtType'}
+          - { property: 'slug',type: 'App\Form\TxtType'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+    Category:
+      class: App\Entity\Category
+      form:
+        fields:
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+    Blog:
+      class: App\Entity\Blog
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+      form:
+        fields:
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
+          - {property: 'title',type: 'App\Form\TxtType'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'suiteText',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+          - { property: 'categories'}
+    Work:
+      class: App\Entity\Work
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - { property: 'image', type: 'image', base_path: '%app.path.images%' }
+      form:
+        fields:
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+          - { property: 'image',type: 'App\Form\ImageType'}
+          - { property: 'tags'}
+          - { property: 'user'}
+    Image:
+      class: App\Entity\Image
+      list:
+        fields:
+          - {property: 'id'}
+          - { property: 'name', type: 'image', base_path: '%app.path.images%' }
+          - {property: 'type'}
+      form:
+        fields:
+          - {property: 'file', type: 'Vich\UploaderBundle\Form\Type\VichImageType'}
+          - {property: 'type'}
+    Page:
+      class: App\Entity\Page
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'name'}
+          - {property: 'url'}
+      form:
+        fields:
+          - {property: 'name',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
+          - {property: 'url'}
+          - {property: 'content'}
+          - { property: 'bigTitle',type: 'App\Form\TxtType'}
+          - { property: 'title',type: 'App\Form\TxtType'}
+          - { property: 'subtitle',type: 'App\Form\TxtType'}
+          - { property: 'description',type: 'App\Form\TxtType'}
+    News:
+      class: App\Entity\News
+      list:
+        fields:
+          - {property: 'id'}
+          - {property: 'title'}
+      form:
+        fields:
+          - {property: 'title',type: 'App\Form\TxtType'}
+          - {property: 'slug',type: 'App\Form\TxtType'}
+          - {property: 'description',type: 'App\Form\TxtType'}
+
+

@@ -1,0 +1,25 @@
+<div class="section section-white">
+    <div class="container">
+        <div class="row">
+            <div class="section-title">
+                <h1>nos dernieres projets</h1>
+            </div>
+            <ul class="grid cs-style-3">
+                {% for work in last_works %}
+                    <div class="col-md-4 col-sm-6">
+                        <figure>
+                            <img src="{{ asset('uploads/img/'~work.image) }}" alt="img04">
+                            <figcaption>
+                                <h3>{{work.name|upper}}</h3>
+                                <span>{{work.description|slice(0,11)}}</span>
+                                <a href="{{path('app_work_show',{id:work.id,slug:work.slug})}}">Take a look</a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Our Portfolio -->
+<hr>

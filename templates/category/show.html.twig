@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Category-{{ category.name.content }}{% endblock %}
+{% block body %}
+    <!-- Page Title -->
+    <div class="section section-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>details d'une category</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <!-- Product Image & Available Colors -->
+                <div class="col-sm-6">
+                    <div class="product-image-large">
+                        <img src="{{asset('uploads/img/'~category.image)}}" alt="{{category.name.content}}">
+                    </div>
+                    <div class="colors">
+                        <span class="color-white"></span>
+                        <span class="color-black"></span>
+                        <span class="color-blue"></span>
+                        <span class="color-orange"></span>
+                        <span class="color-green"></span>
+                    </div>
+                </div>
+                <!-- End Product Image & Available Colors -->
+                <!-- Product Summary & Options -->
+                <div class="col-sm-6 product-details">
+                    <h2>{{category.name.content}}</h2>
+                    <h3></h3>
+                    <p>{{ category.description.content }}</p>
+                    <h3>Details de category</h3>
+                    <p><strong>Date: </strong>{{category.date|date('d F ,Y')}}</p>
+                    <p><strong>blogs: </strong>
+                        {% for blog in category.blogs %}
+                            <a href="{{ path('app_blog_show',{id:blog.id,slug:blog.slug}) }}">{{blog.name.content}}</a>{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ render(controller('App\\Controller\\BlogController::similarBlogs',{'entity':category.blogs.first,'route':'app_blog_show'})) }}
+{% endblock %}

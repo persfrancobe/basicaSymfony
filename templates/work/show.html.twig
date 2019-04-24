@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Work-{{ work.name.content }}{% endblock %}
+{% block body %}
+    <!-- Page Title -->
+    <div class="section section-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>details d'un produit</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <!-- Product Image & Available Colors -->
+                <div class="col-sm-6">
+                    <div class="product-image-large">
+                        <img src="{{asset('uploads/img/'~work.image)}}" alt="{{work.name}}">
+                    </div>
+                    <div class="colors">
+                        <span class="color-white"></span>
+                        <span class="color-black"></span>
+                        <span class="color-blue"></span>
+                        <span class="color-orange"></span>
+                        <span class="color-green"></span>
+                    </div>
+                </div>
+                <!-- End Product Image & Available Colors -->
+                <!-- Product Summary & Options -->
+                <div class="col-sm-6 product-details">
+                    <h2>{{work.name.content}}</h2>
+                    <h3></h3>
+                    <p>{{ work.description.content }}</p>
+                    <h3>Details de projet</h3>
+                    <p><strong>Client: </strong>{{work.user}}</p>
+                    <p><strong>Date: </strong>{{work.date|date('d F ,Y')}}</p>
+                    <p><strong>Tags: </strong>
+                        {% for tag in work.tags %}
+                            <a href="{{ path('app_tag_show',{id:tag.id,slug:tag.slug}) }}">{{tag.name.content}}</a>{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    {{ render(controller('App\\Controller\\WorkController::similarWorks',{'entity':work,'route':app.request.attributes.get('_route')})) }}
+{% endblock %}
