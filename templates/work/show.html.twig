@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}Work-{{ work.name.content }}{% endblock %}
+{% block title %}{% trans %}travail{% endtrans %}-{{ work.name.getContent(app.request.locale) }}{% endblock %}
 {% block body %}
     <!-- Page Title -->
     <div class="section section-breadcrumbs">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>details d'un produit</h1>
+                    <h1>{% trans %}Details d'un Produit{% endtrans %}</h1>
                 </div>
             </div>
         </div>
@@ -30,15 +30,15 @@
                 <!-- End Product Image & Available Colors -->
                 <!-- Product Summary & Options -->
                 <div class="col-sm-6 product-details">
-                    <h2>{{work.name.content}}</h2>
+                    <h2>{{work.name.getContent(app.request.locale)}}</h2>
                     <h3></h3>
-                    <p>{{ work.description.content }}</p>
-                    <h3>Details de projet</h3>
-                    <p><strong>Client: </strong>{{work.user}}</p>
-                    <p><strong>Date: </strong>{{work.date|date('d F ,Y')}}</p>
-                    <p><strong>Tags: </strong>
+                    <p>{{ work.description.getContent(app.request.locale) }}</p>
+                    <h3>{% trans %}Details de projet{% endtrans %}</h3>
+                    <p><strong>{% trans %}Client{% endtrans %}: </strong>{{work.user}}</p>
+                    <p><strong>{% trans %}Date{% endtrans %}: </strong>{{work.date|date('d F ,Y')}}</p>
+                    <p><strong>{% trans %}Tags{% endtrans %}: </strong>
                         {% for tag in work.tags %}
-                            <a href="{{ path('app_tag_show',{id:tag.id,slug:tag.slug}) }}">{{tag.name.content}}</a>{% if not loop.last %},{% endif %}
+                            <a href="{{ path('app_tag_show',{id:tag.id,slug:tag.slug}) }}">{{tag.name.getContent(app.request.locale)}}</a>{% if not loop.last %},{% endif %}
                         {% endfor %}
                 </div>
             </div>

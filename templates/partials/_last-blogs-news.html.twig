@@ -4,14 +4,14 @@
         <div class="row">
             <!-- Featured News -->
             <div class="col-sm-6 featured-news">
-                <h2>Latest Blog Posts</h2>
+                <h2>{% trans %}Derniére Blog Posts{% endtrans %}</h2>
                 {% for blog in blogs %}
                 <div class="row">
                     <div class="col-xs-4"><a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}"><img src="{{ asset('uploads/img/'~blog.image) }}" alt="{{blog.title}}"></a></div>
                     <div class="col-xs-8">
-                        <div class="caption"><a href="#">{{blog.title}}</a></div>
+                        <div class="caption"><a href="#">{{blog.title.getContent(app.request.locale)}}</a></div>
                         <div class="date">{{blog.date|date('D F, Y')}} </div>
-                        <div class="intro">{{ blog.description|slice(0,100)}}...<a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}">Read more...</a></div>
+                        <div class="intro">{{ blog.description.getContent(app.request.locale)|slice(0,100)}}...<a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}">{% trans %}la suite{% endtrans %}...</a></div>
                     </div>
                 </div>
                 {% endfor %}
@@ -19,13 +19,13 @@
             <!-- End Featured News -->
             <!-- Latest News FB -->
             <div class="col-sm-6 latest-news">
-                <h2>Lastest FaceBook/Twitter News</h2>
+                <h2>{% trans %}Derniére FaceBook/Twitter News{% endtrans %}</h2>
                 {% for new in news %}
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="caption"><a href="#">{{new.title}}.</a></div>
                         <div class="date">{{new.date|date('D F, Y')}} </div>
-                        <div class="intro">{{ new.description|slice(0,100) }}...<a href="#">Read more...</a></div>
+                        <div class="intro">{{ new.description.getContent(app.request.locale)|slice(0,100) }}...<a href="#">{% trans %}plus{% endtrans %}...</a></div>
                     </div>
                 </div>
                 {% endfor %}
