@@ -5,16 +5,14 @@
     <div class="section section-breadcrumbs">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <h1>nos Blogs</h1>
-                </div>
+                <div class="col-md-12"><h1>nos Blogs</h1></div>
             </div>
         </div>
     </div>
     <div class="section">
         <div class="container">
             <div class="row">
-                {% for blog in blogs %}
+                {% for blog in blogs%}
                 <!-- Blog Post Excerpt -->
                 <div class="col-sm-6">
                     <div class="blog-post blog-single-post">
@@ -28,26 +26,21 @@
                             <i class="glyphicon glyphicon-time"></i>{{blog.date|date('d F , Y')}} <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>{{blog.comments}}</a>
                         </div>
                         <div class="single-post-content">
-                            <p>{{blog.suiteText.content|slice(0,555)}}</p>
+                            <p>{{blog.suiteText.content|slice(0,400)}}</p>
                             <a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}" class="btn">la suite</a>
                         </div>
                     </div>
                 </div>
                 <!-- End Blog Post Excerpt -->
+                {% if loop.index == 2 %}</div><div class="row"> {% endif %}
                 {% endfor %}
-                <!-- Pagination -->
-                <div class="pagination-wrapper ">
-                    <ul class="pagination pagination-sm">
-                        <li class="disabled"><a href="#">Previous</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
-                </div>
+
+
             </div>
+            <div class="pagination-wrapper ">
+                {{ knp_pagination_render(blogs) }}
+            </div>
+
         </div>
     </div>
 {% endblock %}
