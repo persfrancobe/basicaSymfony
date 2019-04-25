@@ -64,7 +64,7 @@ easy_admin:
         fields:
           - {property: 'id'}
           - { property: 'name', type: 'image', base_path: '%app.path.images%' }
-          - {property: 'type'}
+          - {property: 'date'}
       form:
         fields:
           - {property: 'file', type: 'Vich\UploaderBundle\Form\Type\VichImageType'}
