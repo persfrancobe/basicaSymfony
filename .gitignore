@@ -3,6 +3,8 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+\.idea/
+/public/uploads
 /public/bundles/
 /var/
 /vendor/
@@ -17,4 +19,4 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-\.idea/
+

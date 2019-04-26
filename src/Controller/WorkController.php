@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/work",name="app_work_")
+ * @Route({"en":"/work","fr":"/travail"}, name="app_work_")
  */
 class WorkController extends AbstractController
 {

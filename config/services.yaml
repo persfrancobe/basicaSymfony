@@ -6,6 +6,10 @@
 parameters:
     locale: 'fr'
     app.path.images: /uploads/img
+    app_locales: [fr,en]
+    tel: +32 485 05 65 53
+    adress: Rue Ferdinand Nicolay 67 Saint Nicolas 4420
+    email: persfrancobe@gmail.com
 
 services:
     # default configuration for services in *this* file

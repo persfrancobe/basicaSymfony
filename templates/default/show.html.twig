@@ -1,30 +1,30 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ page.name }}{% endblock %}
+{% block title %}{{ page.name.getContent(app.request.locale) }}{% endblock %}
 {% block body %}
-    {% if page.bigTitle %}
+    {% if page.bigTitle is not null %}
         <!-- Page Title -->
         <div class="section section-breadcrumbs">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>{{page.bigTitle.content}}</h1>
+                        <h1>{{page.bigTitle.getContent(app.request.locale)}}</h1>
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
-    {% if page.title or page.subtitle or page.description %}
+    {% if page.title is not null or page.subtitle is not null or page.description is not null %}
         <div class="section">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2>{{page.title.content ??''}}</h2>
-                        <h3>{{page.subtitle.content ?? ''}}</h3>
-                        <p>{{ page.description.content ?? '' }} </p>
+                        <h2>{{page.title.getContent(app.request.locale) ??''}}</h2>
+                        <h3>{{page.subtitle.getContent(app.request.locale) ?? ''}}</h3>
+                        <p>{{ page.description.getContent(app.request.locale) ?? '' }} </p>
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
-{{include(template_from_string(page.content))}}
+{{include(template_from_string(page.content) )}}
 {% endblock %}

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/category",name="app_category_")
+ * @Route({"en":"/category","fr":"/categorie"},name="app_category_")
  */
 class CategoryController extends AbstractController
 {

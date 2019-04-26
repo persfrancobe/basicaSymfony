@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}Tag-{{ tag.name.content }}{% endblock %}
+{% block title %}{% trans %}Tag{% endtrans %}-{{ tag.name.getContent(app.request.locale) }}{% endblock %}
 {% block body %}
     <!-- Page Title -->
     <div class="section section-breadcrumbs">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>details d'une tag</h1>
+                    <h1>{% trans %}Details d'une tag{% endtrans %}</h1>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                 <!-- Product Image & Available Colors -->
                 <div class="col-sm-6">
                     <div class="product-image-large">
-                        <img src="{{asset('uploads/img/'~tag.image)}}" alt="{{tag.name.content}}">
+                        <img src="{{asset('uploads/img/'~tag.image)}}" alt="{{tag.name.getContent(app.request.locale)}}">
                     </div>
                     <div class="colors">
                         <span class="color-white"></span>
@@ -30,14 +30,14 @@
                 <!-- End Product Image & Available Colors -->
                 <!-- Product Summary & Options -->
                 <div class="col-sm-6 product-details">
-                    <h2>{{tag.name.content}}</h2>
+                    <h2>{{tag.name.getContent(app.request.locale)}}</h2>
                     <h3></h3>
-                    <p>{{ tag.description.content }}</p>
-                    <h3>Details de tag</h3>
-                    <p><strong>Date: </strong>{{tag.date|date('d F ,Y')}}</p>
-                    <p><strong>works: </strong>
+                    <p>{{ tag.description.getContent(app.request.locale) }}</p>
+                    <h3>{% trans %}Details de tag{% endtrans %}</h3>
+                    <p><strong>{% trans %}Date{% endtrans %}: </strong>{{tag.date|date('d F ,Y')}}</p>
+                    <p><strong>{% trans %}works{% endtrans %}: </strong>
                         {% for work in tag.works %}
-                            <a href="{{ path('app_work_show',{id:work.id,slug:work.slug}) }}">{{work.name.content}}</a>{% if not loop.last %},{% endif %}
+                            <a href="{{ path('app_work_show.'~app.request.locale ,{id:work.id,slug:work.slug}) }}">{{work.name.getContent(app.request.locale)}}</a>{% if not loop.last %},{% endif %}
                         {% endfor %}
                 </div>
             </div>

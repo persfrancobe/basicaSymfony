@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}Blogs{% endblock %}
+{% block title %}{% trans %}Blogs{% endtrans %}{% endblock %}
 {% block body %}
     <!-- Page Title -->
     <div class="section section-breadcrumbs">
         <div class="container">
             <div class="row">
-                <div class="col-md-12"><h1>nos Blogs</h1></div>
+                <div class="col-md-12">
+                    <h1>{% trans %}Nos Blogs{% endtrans %}</h1>
+                </div>
             </div>
         </div>
     </div>
@@ -17,25 +19,27 @@
                 <div class="col-sm-6">
                     <div class="blog-post blog-single-post">
                         <div class="single-post-title">
-                            <h2>{{blog.name.content}}</h2>
+                            <h2>{{blog.name.getContent(app.request.locale)}}</h2>
                         </div>
                         <div class="single-post-image">
-                            <img src="{{asset('uploads/img/'~blog.image)}}" alt="{{blog.name.content}}">
+                            <img src="{{asset('uploads/img/'~blog.image)}}" alt="{{blog.name.getContent(app.request.locale)}}">
                         </div>
                         <div class="single-post-info">
                             <i class="glyphicon glyphicon-time"></i>{{blog.date|date('d F , Y')}} <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>{{blog.comments}}</a>
                         </div>
                         <div class="single-post-content">
-                            <p>{{blog.suiteText.content|slice(0,400)}}</p>
-                            <a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}" class="btn">la suite</a>
+                            <p>{{blog.suiteText.getContent(app.request.locale)|slice(0,555)}}</p>
+                            <a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}" class="btn">{% trans %}la suite{% endtrans %}</a>
                         </div>
                     </div>
                 </div>
                 <!-- End Blog Post Excerpt -->
                 {% if loop.index == 2 %}</div><div class="row"> {% endif %}
                 {% endfor %}
+                <!-- Pagination -->
+                <div class="pagination-wrapper ">
 
-
+                </div>
             </div>
             <div class="pagination-wrapper ">
                 {{ knp_pagination_render(blogs) }}

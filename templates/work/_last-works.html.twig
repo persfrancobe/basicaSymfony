@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="section-title">
-                <h1>nos dernieres projets</h1>
+                <h1>{% trans %}Nos dernieres projets{% endtrans %}</h1>
             </div>
             <ul class="grid cs-style-3">
                 {% for work in last_works %}
@@ -10,9 +10,9 @@
                         <figure>
                             <img src="{{ asset('uploads/img/'~work.image) }}" alt="img04">
                             <figcaption>
-                                <h3>{{work.name|upper}}</h3>
-                                <span>{{work.description|slice(0,11)}}</span>
-                                <a href="{{path('app_work_show',{id:work.id,slug:work.slug})}}">Take a look</a>
+                                <h3>{{work.name.getContent(app.request.locale)|upper}}</h3>
+                                <span>{{work.description.getContent(app.request.locale)|slice(0,11)}}</span>
+                                <a href="{{path('app_work_show.'~app.request.locale ,{id:work.id,slug:work.slug})}}">{% trans %}la suite{% endtrans %}</a>
                             </figcaption>
                         </figure>
                     </div>
