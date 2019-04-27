@@ -1,7 +1,4 @@
-app_homepage:
+homepage:
     path: /
-    controller: App\Controller\DefaultController::show
-    defaults:
-        _locale: fr
-        slug: 'acceuil'
-        id: 1
+    controller: App\Controller\DefaultController::home
+

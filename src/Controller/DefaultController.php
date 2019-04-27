@@ -23,13 +23,21 @@ class DefaultController extends AbstractController
      *  @Route("/page/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"}, defaults={"id"=1,"slug"="home"})
      * @param \App\Entity\Page $page
      * @param Request $request
-     * @param  string $_locale
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show(Page $page,string $_locale,Request $request): Response
+    public function show(Page $page): Response
     {
-        $request->setLocale($_locale);
         return $this->render('default/show.html.twig',['page'=>$page]);
+    }
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     *  @Route("/", name="app_home", methods={"GET"})
+     */
+    public function home()
+    {
+        return $this->redirectToRoute('app_page_show',['id'=>1,'slug'=>'accueil','_locale'=>'fr']);
     }
 
     /**
