@@ -22,13 +22,19 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="float-right">
+        <div class="float-right container-fluid">
             {% set route = req.attributes.get('_route') %}
             {% set route_params = req.attributes.get('_route_params') %}
             {% set params = route_params|merge(req.query.all) %}
             {% for locale in locales if locale != req.locale %}
-            {% if loop.index !=1 %}|{% endif %} <a href="{{ path(route, params|merge({ _locale: locale })) }}" class="active">{{locale|upper}}</a>
+                {% if loop.index !=1 %}|{% endif %} <a href="{{ path(route, params|merge({ _locale: locale })) }}" class="active">{{locale|upper}}</a>
             {% endfor %}
         </div>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="container-fluid float-right"><a  href="{{ path('fos_user_security_logout') }}">{% trans %}sortir{% endtrans %}</a></div>
+        {% else %}
+            <div class="container-fluid float-right"><a href="{{ path('fos_user_registration_register') }}">{% trans %}s'inscrire{% endtrans %}</a></div>
+            <div class="container-fluid float-right"><a href="{{ path('fos_user_security_login') }}">{% trans %}se connecter{% endtrans %}</a></div>
+         {% endif %}
     </div>
 </header><!--/header-->
