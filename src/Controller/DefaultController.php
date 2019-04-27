@@ -18,11 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DefaultController extends AbstractController
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function home()
+    {
+        return $this->redirectToRoute('app_page_show',['id'=>1,'slug'=>'accueil','_locale'=>'fr']);
+    }
 
     /**
      *  @Route("/page/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"}, defaults={"id"=1,"slug"="home"})
      * @param \App\Entity\Page $page
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Page $page): Response
@@ -30,15 +36,6 @@ class DefaultController extends AbstractController
         return $this->render('default/show.html.twig',['page'=>$page]);
     }
 
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *  @Route("/", name="app_home", methods={"GET"})
-     */
-    public function home()
-    {
-        return $this->redirectToRoute('app_page_show',['id'=>1,'slug'=>'accueil','_locale'=>'fr']);
-    }
 
     /**
      * @param $req
