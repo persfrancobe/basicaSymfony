@@ -5,27 +5,32 @@ namespace App\Controller;
 use App\Entity\Work;
 use App\Form\WorkType;
 use App\Repository\WorkRepository;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/work",name="app_work_")
+ * @Route({"en":"/work","fr":"/travail"}, name="app_work_")
  */
 class WorkController extends AbstractController
 {
 
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/{offset}", name="index", methods={"GET"},defaults={"offset"=0})
      * @param \App\Repository\WorkRepository $workRepository
+     * @param $offset
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(WorkRepository $workRepository): Response
+    public function index(WorkRepository $workRepository,$offset=0): Response
     {
+        $works=$workRepository->findAll();
+        $offset=$offset>count($works)?0:$offset;
         return $this->render('work/index.html.twig', [
-            'works' => $workRepository->findAll(),
-        ]);
+            'works' =>$workRepository->findBy([],[],6,$offset),
+            'nmb'=>count($workRepository->findAll())
+            ]);
     }
 
     /**

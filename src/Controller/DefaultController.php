@@ -8,6 +8,7 @@ use App\Entity\News;
 use App\Entity\Page;
 use App\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,9 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DefaultController extends AbstractController
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function home()
+    {
+        return $this->redirectToRoute('app_page_show',['id'=>1,'slug'=>'accueil','_locale'=>'fr']);
+    }
 
     /**
-     *  @Route("/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"},defaults={"id"=1,"slug"="home"})
+     *  @Route("/page/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"}, defaults={"id"=1,"slug"="home"})
      * @param \App\Entity\Page $page
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -29,13 +37,13 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @param $slug
+     * @param $req
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function nav($slug):Response
+    public function nav($req):Response
     {
         $pages=$this->getDoctrine()->getRepository(Page::class)->findAll();
-        return $this->render('partials/_nav.html.twig',['pages'=>$pages,'slug'=>$slug]);
+        return $this->render('partials/_nav.html.twig',['pages'=>$pages,'req'=>$req]);
     }
     /**
      * @return \Symfony\Component\HttpFoundation\Response

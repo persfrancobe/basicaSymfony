@@ -1,4 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% trans %}nos collections{% endtrans %}{% endblock %}
 {% block body %}
+    <!-- Page Title -->
+    <div class="section section-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{% trans %}nos travails{% endtrans %}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>{% trans %}on est la société{% endtrans %}</h2>
+                    <h3>{% trans %}spécialiser dans wordperess et development{% endtrans %}</h3>
+                    <p>{% trans %}fr----Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id. Donec elementum mi vitae enim fermentum lobortis.{% endtrans %} </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="section">
         <div class="container">
             <div class="row">
@@ -6,11 +29,11 @@
                     {% for work in works %}
                         <div class="col-md-4 col-sm-6">
                             <figure>
-                                <img src="{{asset('uploads/img/'~work.image)}}" alt="{{work.slug.content}}">
+                                <img src="{{asset('uploads/img/'~work.image)}}" alt="{{work.slug.getContent(app.request.locale)}}">
                                 <figcaption>
-                                    <h3>{{work.name.content}}</h3>
-                                    <span>{{work.description.content|slice(0,31)}}</span>
-                                    <a href="{{path('app_work_show',{id:work.id,slug:work.slug})}}">Take a look</a>
+                                    <h3>{{work.name.getContent(app.request.locale)}}</h3>
+                                    <span>{{work.description.getContent(app.request.locale)|slice(0,31)}}</span>
+                                    <a href="{{path('app_work_show.'~app.request.locale ,{id:work.id,slug:work.slug})}}">Take a look</a>
                                 </figcaption>
                             </figure>
                         </div>
@@ -18,7 +41,10 @@
                 </ul>
             </div>
             <ul class="pager">
-                <li><a href="#">More works</a></li>
+                {#nmb c'est le nombre des works existans et la valeur offset qui est multipilie par 6(nombre de cart afficher) par un appelle ajax#}
+                {% set ofst=app.request.attributes.get('offset')+5 %}
+                {% if ofst > nmb %}{% set ofst=0 %}{% endif %}
+                <li><a id="paginAjax" href="javascript:void(0);" data-url="{{ path('app_work_index',{offset:ofst}) }}">plus</a></li>
             </ul>
         </div>
     </div>

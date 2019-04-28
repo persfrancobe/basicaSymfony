@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}Blog-{{ blog.name.content }}{% endblock %}
+{% block title %}Blog-{{ blog.name.getContent(app.request.locale) }}{% endblock %}
 {% block body %}
     <div class="section section-breadcrumbs">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>{{blog.name.content}}</h1>
+                    <h1>{{blog.name.getContent(app.request.locale)}}</h1>
                 </div>
             </div>
         </div>
@@ -17,16 +17,16 @@
                 <div class="col-sm-8">
                     <div class="blog-post blog-single-post">
                         <div class="single-post-title">
-                            <h2>{{ blog.title.content }}</h2>
+                            <h2>{{ blog.title.getContent(app.request.locale) }}</h2>
                         </div>
                         <div class="single-post-image">
-                            <img src="{{asset('uploads/img/'~blog.image)}}" alt="{{blog.name.content}}">
+                            <img src="{{asset('uploads/img/'~blog.image)}}" alt="{{blog.name.getContent(app.request.locale)}}">
                         </div>
                         <div class="single-post-info">
                             <i class="glyphicon glyphicon-time"></i>{{blog.date|date('d F , Y')}} <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>{{blog.comments}}</a>
                         </div>
                         <div class="single-post-content">
-                            <p>{{blog.description.content}}</p>
+                            <p>{{blog.description.getContent(app.request.locale)}}</p>
                             <p>{{blog.suiteText.content}}</p>
                         </div>
                     </div>

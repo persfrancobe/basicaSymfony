@@ -14,7 +14,7 @@ easy_admin:
           - { property: 'slug',type: 'App\Form\TxtType'}
           - { property: 'description',type: 'App\Form\TxtType'}
           - { property: 'image',type: 'App\Form\ImageType'}
-    Category:
+    Categorie:
       class: App\Entity\Category
       form:
         fields:
@@ -43,7 +43,7 @@ easy_admin:
           - { property: 'suiteText',type: 'App\Form\TxtType'}
           - { property: 'image',type: 'App\Form\ImageType'}
           - { property: 'categories'}
-    Work:
+    Travail:
       class: App\Entity\Work
       list:
         fields:
@@ -64,7 +64,7 @@ easy_admin:
         fields:
           - {property: 'id'}
           - { property: 'name', type: 'image', base_path: '%app.path.images%' }
-          - {property: 'type'}
+          - {property: 'date'}
       form:
         fields:
           - {property: 'file', type: 'Vich\UploaderBundle\Form\Type\VichImageType'}

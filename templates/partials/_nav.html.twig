@@ -15,15 +15,30 @@
                     {#pour avoire la possibilité de generer une page a partire de console d'admin egalment pour eciter d'avoire des problems avec pagination
                     bundle je fais des verification pour pouvoire fixer la class activ css#}
                     {% if 'show' in page.url %}
-                <li class="{% if slug.get('slug')==page.slug %}active{% endif %}"><a href="{{path(page.url,{id:page.id,slug:page.slug})}}">{{ page.name }}</a></li>
+                <li class="{% if req.get('slug')==page.slug %}active{% endif %}"><a href="{{path(page.url,{id:page.id,slug:page.slug})}}">{{ page.name.getContent(app.request.locale) }}</a></li>
                     {% else %}
-                        <li class="{% if slug.get('_route')==page.url %}active{% endif %}"><a href="{{path(page.url)}}">{{ page.name }}</a></li>
+                        <li class="{% if req.get('_route')==page.url %}active{% endif %}"><a href="{{path(page.url)}}">{{ page.name.getContent(app.request.locale) }}</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
         </div>
-        <div class="float-right">
-            <a href="#" class="active">FR</a> | <a href="#">EN</a>
+        <div class="float-right container-fluid">
+            {% set route = req.attributes.get('_route') %}
+            {% set route_params = req.attributes.get('_route_params') %}
+            {% set params = route_params|merge(req.query.all) %}
+            {% for locale in locales if locale != req.locale %}
+                {% if loop.index !=1 %}|{% endif %} <a href="{{ path(route, params|merge({ _locale: locale })) }}" class="active">{{locale|upper}}</a>
+            {% endfor %}
         </div>
+        {% if is_granted("ROLE_ADMIN") %}
+            <div class="container-fluid float-right"><a href="{{ path('easyadmin') }}">admin</a></div>
+        {% endif %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="container-fluid float-right"><a  href="{{ path('fos_user_security_logout') }}">{% trans %}sortir{% endtrans %}</a></div>
+        {% else %}
+            <div class="container-fluid float-right"><a href="{{ path('fos_user_registration_register') }}">{% trans %}s'inscrire{% endtrans %}</a></div>
+            <div class="container-fluid float-right"><a href="{{ path('fos_user_security_login') }}">{% trans %}se connecter{% endtrans %}</a></div>
+         {% endif %}
+
     </div>
 </header><!--/header-->

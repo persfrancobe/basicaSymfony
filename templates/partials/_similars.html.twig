@@ -9,10 +9,10 @@
                 {% for entity in entities |slice(0,4)%}
                     <div class="col-md-3 col-sm-6">
                     <figure>
-                        <img src="{{ asset('uploads/img/'~entity.image) }}" alt="{{entity.name.content}}">
+                        <img src="{{ asset('uploads/img/'~entity.image) }}" alt="{{entity.name.getContent(app.request.locale)}}">
                         <figcaption>
-                            <h3>{{entity.name.content}}</h3>
-                            <span>{{entity.description.content|slice(0,20)}}</span>
+                            <h3>{{entity.name.getContent(app.request.locale)}}</h3>
+                            <span>{{entity.description.getContent(app.request.locale)|slice(0,20)}}</span>
                             <a href="{{path(route,{'id':entity.id,'slug':entity.slug }) }}">Take a look</a>
                         </figcaption>
                     </figure>

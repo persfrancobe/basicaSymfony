@@ -12,8 +12,8 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="carousel-content centered">
-                                    <h2 class="animation animated-item-1">{{category.name}}</h2>
-                                    <p class="animation animated-item-2">{{ category.description }}. </p>
+                                    <h2 class="animation animated-item-1">{{category.name.getContent(app.request.locale)}}</h2>
+                                    <p class="animation animated-item-2">{{ category.description.getContent(app.request.locale) }}. </p>
                                 </div>
                             </div>
                         </div>
