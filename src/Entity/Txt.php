@@ -91,7 +91,7 @@ class Txt
      * @param string $en
      * @return \App\Entity\Txt
      */
-    public function setEn(string $en): self
+    public function setEn(?string $en): self
     {
         $this->en = $en;
 

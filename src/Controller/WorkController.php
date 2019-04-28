@@ -18,32 +18,19 @@ class WorkController extends AbstractController
 {
 
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/{offset}", name="index", methods={"GET"},defaults={"offset"=0})
      * @param \App\Repository\WorkRepository $workRepository
-     * @param $route
+     * @param $offset
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(WorkRepository $workRepository,$route): Response
+    public function index(WorkRepository $workRepository,$offset=0): Response
     {
+        $works=$workRepository->findAll();
+        $offset=$offset>count($works)?0:$offset;
         return $this->render('work/index.html.twig', [
-            'works' => $workRepository->findAll(),
-            'route'=>$route
-        ]);
-    }
-
-    /**
-     * @Route("/{nmb}", name="ajax", methods={"GET"},defaults={"nmb"=1})
-     * @param WorkRepository $workRepository
-     * @param integer $nmb
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function ajax(WorkRepository $workRepository,Integer $nmb): Response
-    {
-        $limit=4;
-        $ofset=$nmb*$limit;
-        return $this->render('work/index.html.twig', [
-            'works' => $workRepository->findBy([],['orderBy'=>'id'],['limit'=>$limit],$ofset),
-        ]);
+            'works' =>$workRepository->findBy([],[],6,$offset),
+            'nmb'=>count($workRepository->findAll())
+            ]);
     }
 
     /**

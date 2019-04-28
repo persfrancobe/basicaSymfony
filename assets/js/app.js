@@ -23,12 +23,11 @@ $(document).ready(()=>{
             url:url,
             method: 'GET',
             data:{},
-            success:(responseSrv)=>{
-                //document.location.replace('/')
-                console.log($('#paginAjax').attr('data-url'))
+            success:()=>{
+                document.location.replace($('#paginAjax').attr('data-url'))
             },
             error:()=>{
-                window.alert("problem")
+                console.log('problem with ajax pagination')
             }
         })
     })
