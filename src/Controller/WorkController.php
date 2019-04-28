@@ -65,4 +65,12 @@ class WorkController extends AbstractController
         $sim=$this->getDoctrine()->getRepository(Work::class)->findByTags($entity->getTags());
         return $this->render('partials/_similars.html.twig',['entities'=>$sim,'route'=>$route]);
     }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function slider():Response
+    {
+        $works=$this->getDoctrine()->getRepository(Work::class)->findAll();
+        return $this->render('partials/_slider.html.twig',['works'=>$works]);
+    }
 }
