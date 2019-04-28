@@ -223,7 +223,7 @@ class Page
      * @param string $content
      * @return null|Page
      */
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
