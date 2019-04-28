@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Work;
 use App\Form\WorkType;
 use App\Repository\WorkRepository;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +20,29 @@ class WorkController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      * @param \App\Repository\WorkRepository $workRepository
+     * @param $route
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(WorkRepository $workRepository): Response
+    public function index(WorkRepository $workRepository,$route): Response
     {
         return $this->render('work/index.html.twig', [
             'works' => $workRepository->findAll(),
+            'route'=>$route
+        ]);
+    }
+
+    /**
+     * @Route("/{nmb}", name="ajax", methods={"GET"},defaults={"nmb"=1})
+     * @param WorkRepository $workRepository
+     * @param integer $nmb
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function ajax(WorkRepository $workRepository,Integer $nmb): Response
+    {
+        $limit=4;
+        $ofset=$nmb*$limit;
+        return $this->render('work/index.html.twig', [
+            'works' => $workRepository->findBy([],['orderBy'=>'id'],['limit'=>$limit],$ofset),
         ]);
     }
 

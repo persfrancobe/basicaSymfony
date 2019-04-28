@@ -16,3 +16,22 @@ require('../css/main.css');
 require('../css/custom.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
+$(document).ready(()=>{
+    let url=$(this).attr('data-url')
+    $('#paginAjax').click(()=>{
+        $.ajax({
+            url:url,
+            method: 'GET',
+            data:{},
+            success:(responseSrv)=>{
+                //document.location.replace('/')
+                console.log($('#paginAjax').attr('data-url'))
+            },
+            error:()=>{
+                window.alert("problem")
+            }
+        })
+    })
+
+
+})

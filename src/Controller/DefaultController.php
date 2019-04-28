@@ -36,7 +36,6 @@ class DefaultController extends AbstractController
         return $this->render('default/show.html.twig',['page'=>$page]);
     }
 
-
     /**
      * @param $req
      * @return \Symfony\Component\HttpFoundation\Response
