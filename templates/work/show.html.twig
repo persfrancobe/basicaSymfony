@@ -38,7 +38,7 @@
                     <p><strong>{% trans %}Date{% endtrans %}: </strong>{{work.date|date('d F ,Y')}}</p>
                     <p><strong>{% trans %}Tags{% endtrans %}: </strong>
                         {% for tag in work.tags %}
-                            <a href="{{ path('app_tag_show',{id:tag.id,slug:tag.slug}) }}">{{tag.name.getContent(app.request.locale)}}</a>{% if not loop.last %},{% endif %}
+                            <a href="{{ path('app_tag_show',{id:tag.id,slug:tag.name.getSlug(app.request.locale)}) }}">{{tag.name.getContent(app.request.locale)}}</a>{% if not loop.last %},{% endif %}
                         {% endfor %}
                 </div>
             </div>

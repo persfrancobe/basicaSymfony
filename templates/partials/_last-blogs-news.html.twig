@@ -7,11 +7,11 @@
                 <h2>{% trans %}Derniére Blog Posts{% endtrans %}</h2>
                 {% for blog in blogs %}
                 <div class="row">
-                    <div class="col-xs-4"><a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}"><img src="{{ asset('uploads/img/'~blog.image) }}" alt="{{blog.title}}"></a></div>
+                    <div class="col-xs-4"><a href="{{path('app_blog_show',{id:blog.id,slug:blog.name.getSlug(app.request.locale)})}}"><img src="{{ asset('uploads/img/'~blog.image) }}" alt="{{blog.title}}"></a></div>
                     <div class="col-xs-8">
                         <div class="caption"><a href="#">{{blog.title.getContent(app.request.locale)}}</a></div>
                         <div class="date">{{blog.date|date('D F, Y')}} </div>
-                        <div class="intro">{{ blog.description.getContent(app.request.locale)|slice(0,100)}}...<a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}">{% trans %}la suite{% endtrans %}...</a></div>
+                        <div class="intro">{{ blog.description.getContent(app.request.locale)|slice(0,100)}}...<a href="{{path('app_blog_show',{id:blog.id,slug:blog.name.getSlug(app.request.locale)})}}">{% trans %}la suite{% endtrans %}...</a></div>
                     </div>
                 </div>
                 {% endfor %}

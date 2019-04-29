@@ -29,7 +29,7 @@
                         </div>
                         <div class="single-post-content">
                             <p>{{blog.suiteText.getContent(app.request.locale)|slice(0,555)}}</p>
-                            <a href="{{path('app_blog_show',{id:blog.id,slug:blog.slug})}}" class="btn">{% trans %}la suite{% endtrans %}</a>
+                            <a href="{{path('app_blog_show',{id:blog.id,slug:blog.name.getSlug(app.request.locale)})}}" class="btn">{% trans %}la suite{% endtrans %}</a>
                         </div>
                     </div>
                 </div>

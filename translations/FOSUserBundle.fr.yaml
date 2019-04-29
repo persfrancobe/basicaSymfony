@@ -1,9 +1,9 @@
 's''inscrire': 's''inscrire'
-registration.confirmed: __registration.confirmed
+registration.confirmed: voue etes bien inscri. Bien Venue chosissez la page que vous voulez dans le menu
 registration.back: __registration.back
-registration.submit: __registration.submit
+registration.submit: Valider
 'se connecter': 'se connecter'
-security.login.username: __security.login.username
-security.login.password: __security.login.password
-security.login.remember_me: __security.login.remember_me
-security.login.submit: __security.login.submit
+security.login.username: Nomd'Utilisateur
+security.login.password: Mot de Passe
+security.login.remember_me: Se Rappeler de Moi
+security.login.submit: Valider

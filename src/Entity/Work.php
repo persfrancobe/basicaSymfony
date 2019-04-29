@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
@@ -20,7 +21,7 @@ class Work
     private $id;
 
     /**
-     *@ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     *@ORM\OneToOne(targetEntity="App\Entity\Name", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -45,12 +46,7 @@ class Work
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
-     */
-    private $slug;
-
-    /**
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="works")
      */
     private $user;
@@ -243,22 +239,6 @@ class Work
     public function setName($name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
 }

@@ -5,12 +5,9 @@ namespace App\Controller;
 use App\Entity\Blog;
 use App\Entity\Category;
 use App\Entity\News;
-use App\Entity\Page;
 use App\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DefaultController
@@ -24,34 +21,6 @@ class DefaultController extends AbstractController
     public function home()
     {
         return $this->redirectToRoute('app_page_show',['id'=>1,'slug'=>'accueil','_locale'=>'fr']);
-    }
-
-    /**
-     *  @Route("/page/{id}-{slug}", name="app_page_show", methods={"GET"},requirements={"id":"[1-9][0-9]*", "slug": "[a-z][a-z0-9\-]*"}, defaults={"id"=1,"slug"="home"})
-     * @param \App\Entity\Page $page
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function show(Page $page): Response
-    {
-        return $this->render('default/show.html.twig',['page'=>$page]);
-    }
-
-    /**
-     * @param $req
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function nav($req):Response
-    {
-        $pages=$this->getDoctrine()->getRepository(Page::class)->findAll();
-        return $this->render('partials/_nav.html.twig',['pages'=>$pages,'req'=>$req]);
-    }
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function slider():Response
-    {
-        $categories=$this->getDoctrine()->getRepository(Category::class)->findAll();
-        return $this->render('partials/_slider.html.twig',['categories'=>$categories]);
     }
 
     /**

@@ -18,7 +18,7 @@ class WorkController extends AbstractController
 {
 
     /**
-     * @Route("/{offset}", name="index", methods={"GET"},defaults={"offset"=0})
+     * @Route("/{offset}-offset", name="index", methods={"GET"},defaults={"offset"=0})
      * @param \App\Repository\WorkRepository $workRepository
      * @param $offset
      * @return \Symfony\Component\HttpFoundation\Response
@@ -64,5 +64,13 @@ class WorkController extends AbstractController
     {
         $sim=$this->getDoctrine()->getRepository(Work::class)->findByTags($entity->getTags());
         return $this->render('partials/_similars.html.twig',['entities'=>$sim,'route'=>$route]);
+    }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function slider():Response
+    {
+        $works=$this->getDoctrine()->getRepository(Work::class)->findAll();
+        return $this->render('partials/_slider.html.twig',['works'=>$works]);
     }
 }
