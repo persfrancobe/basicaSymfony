@@ -33,11 +33,6 @@ class News
     private $description;
 
     /**
-     *@ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     */
-    private $slug;
-
-    /**
      * News constructor.
      * @throws \Exception
      */
@@ -109,21 +104,4 @@ class News
     {
         $this->description = $description;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
-    }
-
 }

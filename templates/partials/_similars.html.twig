@@ -8,15 +8,15 @@
             <ul class="grid cs-style-2">
                 {% for entity in entities |slice(0,4)%}
                     <div class="col-md-3 col-sm-6">
-                    <figure>
-                        <img src="{{ asset('uploads/img/'~entity.image) }}" alt="{{entity.name.getContent(app.request.locale)}}">
-                        <figcaption>
-                            <h3>{{entity.name.getContent(app.request.locale)}}</h3>
-                            <span>{{entity.description.getContent(app.request.locale)|slice(0,20)}}</span>
-                            <a href="{{path(route,{'id':entity.id,'slug':entity.slug }) }}">Take a look</a>
-                        </figcaption>
-                    </figure>
-                </div>
+                        <figure>
+                            <img src="{{ asset('uploads/img/'~entity.image) }}" alt="{{entity.name.getContent(app.request.locale)}}">
+                            <figcaption>
+                                <h3>{{entity.name.getContent(app.request.locale)}}</h3>
+                                <span>{{entity.description.getContent(app.request.locale)|slice(0,20)}}</span>
+                                <a href="{{path(route,{'id':entity.id,'slug':entity.name.getSlug(app.request.locale) }) }}">Take a look</a>
+                            </figcaption>
+                        </figure>
+                    </div>
                {% endfor %}
             </ul>
         </div>

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,7 +19,7 @@ class Category
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Name", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -28,12 +27,6 @@ class Category
      * @ORM\Column(type="datetime")
      */
     private $date;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
-     */
-    private $slug;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
@@ -134,14 +127,6 @@ class Category
     }
 
     /**
-     * @return Collection|Txt[]
-     */
-    public function getTxts(): Collection
-    {
-        return $this->txts;
-    }
-
-    /**
      * @return null|\App\Entity\Txt
      */
     public function getDescription(): ?Txt
@@ -230,6 +215,7 @@ class Category
     {
         $this->name = $name;
     }
+
 
     /**
      * @return mixed

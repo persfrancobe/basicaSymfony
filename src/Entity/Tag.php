@@ -25,19 +25,12 @@ class Tag
     private $date;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     *  @Assert\NotBlank()
-     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/",message="slug peut contenir que des lettre et des chifres et tire merci")
-     */
-    private $slug;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Work", mappedBy="tags")
      */
     private $works;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Name", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -167,22 +160,6 @@ class Tag
         $this->Image = $Image;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
     /**

@@ -21,7 +21,7 @@ class Blog
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Name", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -34,11 +34,6 @@ class Blog
      * @ORM\Column(type="integer")
      */
     private $comments;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     */
-    private $slug;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
@@ -140,22 +135,6 @@ class Blog
     public function setName($name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
     /**
