@@ -21,7 +21,7 @@ class Work
     private $id;
 
     /**
-     *@ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     *@ORM\OneToOne(targetEntity="App\Entity\Name", cascade={"persist", "remove"})
      */
     private $name;
 
@@ -44,12 +44,6 @@ class Work
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
-     */
-    private $slug;
 
     /**
      *
@@ -245,22 +239,6 @@ class Work
     public function setName($name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
 }

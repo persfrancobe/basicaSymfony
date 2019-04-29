@@ -27,32 +27,13 @@ class Txt
     private $fr;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $nl;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $ge;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $it;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $sp;
-
-    /**
      * @return string
      */
     public function __toString() : string
     {
         return $this->getContent();
     }
+
 
     /**
      * @return null|int
@@ -72,9 +53,6 @@ class Txt
         switch ($locale){
             case 'fr':return $this->fr;break;
             case 'en':return $this->en;break;
-            case 'nl':return $this->nl;break;
-            case 'it':return $this->it;break;
-            case 'sp':return $this->sp;break;
             default:return $this->fr;break;
         }
     }
@@ -113,82 +91,6 @@ class Txt
     public function setFr(?string $fr): self
     {
         $this->fr = $fr;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getNl(): ?string
-    {
-        return $this->nl;
-    }
-
-    /**
-     * @param null|string $nl
-     * @return \App\Entity\Txt
-     */
-    public function setNl(?string $nl): self
-    {
-        $this->nl = $nl;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getGe(): ?string
-    {
-        return $this->ge;
-    }
-
-    /**
-     * @param null|string $ge
-     * @return \App\Entity\Txt
-     */
-    public function setGe(?string $ge): self
-    {
-        $this->ge = $ge;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getIt(): ?string
-    {
-        return $this->it;
-    }
-
-    /**
-     * @param null|string $it
-     * @return \App\Entity\Txt
-     */
-    public function setIt(?string $it): self
-    {
-        $this->it = $it;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSp(): ?string
-    {
-        return $this->sp;
-    }
-
-    /**
-     * @param null|string $sp
-     * @return \App\Entity\Txt
-     */
-    public function setSp(?string $sp): self
-    {
-        $this->sp = $sp;
 
         return $this;
     }

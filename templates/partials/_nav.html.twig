@@ -15,7 +15,7 @@
                     {#pour avoire la possibilité de generer une page a partire de console d'admin egalment pour eciter d'avoire des problems avec pagination
                     bundle je fais des verification pour pouvoire fixer la class activ css#}
                     {% if 'show' in page.url %}
-                <li class="{% if req.get('slug')==page.slug %}active{% endif %}"><a href="{{path(page.url,{id:page.id,slug:page.slug})}}">{{ page.name.getContent(app.request.locale) }}</a></li>
+                <li class="{% if req.get('slug')==page.name.getSlug(app.request.locale) %}active{% endif %}"><a href="{{path(page.url,{id:page.id,slug:page.name.getSlug(app.request.locale)})}}">{{ page.name.getContent(app.request.locale) }}</a></li>
                     {% else %}
                         <li class="{% if req.get('_route')==page.url %}active{% endif %}"><a href="{{path(page.url)}}">{{ page.name.getContent(app.request.locale) }}</a></li>
                     {% endif %}

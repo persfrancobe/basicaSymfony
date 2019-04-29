@@ -37,7 +37,7 @@
                     <p><strong>Date: </strong>{{category.date|date('d F ,Y')}}</p>
                     <p><strong>blogs: </strong>
                         {% for blog in category.blogs %}
-                            <a href="{{ path('app_blog_show',{id:blog.id,slug:blog.slug}) }}">{{blog.name.getContent(app.request.locale)}}</a>{% if not loop.last %},{% endif %}
+                            <a href="{{ path('app_blog_show',{id:blog.id,slug:blog.name.getSlug(app.request.locale)}) }}">{{blog.name.getContent(app.request.locale)}}</a>{% if not loop.last %},{% endif %}
                         {% endfor %}
                 </div>
             </div>

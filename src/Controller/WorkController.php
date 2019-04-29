@@ -18,7 +18,7 @@ class WorkController extends AbstractController
 {
 
     /**
-     * @Route("/{offset}", name="index", methods={"GET"},defaults={"offset"=0})
+     * @Route("/{offset}-offset", name="index", methods={"GET"},defaults={"offset"=0})
      * @param \App\Repository\WorkRepository $workRepository
      * @param $offset
      * @return \Symfony\Component\HttpFoundation\Response

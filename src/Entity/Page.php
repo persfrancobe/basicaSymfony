@@ -18,15 +18,9 @@ class Page
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Name", cascade={"persist", "remove"})
      */
     private $name;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Txt", cascade={"persist", "remove"})
-     * @Assert\Regex(pattern="/[a-z][a-z0-9\-]*$/")
-     */
-    private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -244,22 +238,6 @@ class Page
     public function setName($name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
 }
