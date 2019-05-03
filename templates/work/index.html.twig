@@ -25,7 +25,7 @@
     <div class="section">
         <div class="container">
             <div class="row">
-                <ul class="grid cs-style-2">
+                <ul id="inj-place" class="grid cs-style-2">
                     {% for work in works %}
                         <div class="col-md-4 col-sm-6">
                             <figure>
@@ -41,10 +41,7 @@
                 </ul>
             </div>
             <ul class="pager">
-                {#nmb c'est le nombre des works existans et la valeur offset qui est multipilie par 6(nombre de cart afficher) par un appelle ajax#}
-                {% set ofst=app.request.attributes.get('offset')+5 %}
-                {% if ofst > nmb %}{% set ofst=0 %}{% endif %}
-                <li><a id="paginAjax" href="javascript:void(0);" data-url="{{ path('app_work_index',{offset:ofst}) }}">plus</a></li>
+                <li><a id="paginAjax" href="javascript:void(0);" data-url="{{path('app_work_ajax')}}"  data-nmb="{{ nmb }}">plus</a></li>
             </ul>
         </div>
     </div>

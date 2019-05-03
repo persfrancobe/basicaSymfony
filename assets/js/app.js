@@ -17,14 +17,25 @@ require('../css/custom.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 $(document).ready(()=>{
-    let url=$(this).attr('data-url')
-    $('#paginAjax').click(()=>{
+    var url=$('#paginAjax').attr('data-url')
+    var offset=10
+    $('#paginAjax').click((event)=>{
+        event.preventDefault();
+
         $.ajax({
             url:url,
-            method: 'GET',
-            data:{},
-            success:()=>{
-                document.location.replace($('#paginAjax').attr('data-url'))
+            method: 'POST',
+            data:{offset:offset},
+            success:(serverResponse)=>{
+                let slct=$('#paginAjax')
+                let nmb=parseInt(slct.data('nmb'))
+
+                if (offset>=nmb){
+                    slct.remove()
+                }
+                $('#inj-place').append(serverResponse)
+                offset+=5
+                //document.location.replace($('#paginAjax').attr('data-url'))
             },
             error:()=>{
                 console.log('problem with ajax pagination')
