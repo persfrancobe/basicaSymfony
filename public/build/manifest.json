@@ -6,7 +6,7 @@
   "build/jquery.easing.min.js": "/build/jquery.easing.min.js",
   "build/runtime.js": "/build/runtime.js",
   "build/scrolling-nav.js": "/build/scrolling-nav.js",
-  "build/fonts/fontawesome-webfont.eot?v=3.2.1": "/build/fonts/fontawesome-webfont.5ae23ad2.eot",
+  "build/fonts/fontawesome-webfont.eot": "/build/fonts/fontawesome-webfont.5ae23ad2.eot",
   "build/fonts/fontawesome-webfont.ttf?v=3.2.1": "/build/fonts/fontawesome-webfont.8cca2f02.ttf",
   "build/fonts/fontawesome-webfont.woff?v=3.2.1": "/build/fonts/fontawesome-webfont.b683029b.woff",
   "build/fonts/glyphicons-halflings-regular.woff": "/build/fonts/glyphicons-halflings-regular.68ed1dac.woff",

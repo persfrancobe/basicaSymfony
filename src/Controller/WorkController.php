@@ -18,19 +18,13 @@ class WorkController extends AbstractController
 {
 
     /**
-     * @Route("/{offset}-offset", name="index", methods={"GET"},defaults={"offset"=0})
+     * @Route("/", name="index", methods={"GET"})
      * @param \App\Repository\WorkRepository $workRepository
-     * @param $offset
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(WorkRepository $workRepository,$offset=0): Response
+    public function index(WorkRepository $workRepository): Response
     {
-        $works=$workRepository->findAll();
-        $offset=$offset>count($works)?0:$offset;
-        return $this->render('work/index.html.twig', [
-            'works' =>$workRepository->findBy([],[],6,$offset),
-            'nmb'=>count($workRepository->findAll())
-            ]);
+        return $this->render('work/index.html.twig', ['works' =>$workRepository->findBy([],[],6),'nmb'=>count($workRepository->findAll())]);
     }
 
     /**
@@ -72,5 +66,17 @@ class WorkController extends AbstractController
     {
         $works=$this->getDoctrine()->getRepository(Work::class)->findAll();
         return $this->render('partials/_slider.html.twig',['works'=>$works]);
+    }
+
+    /**
+     * @param \App\Repository\WorkRepository $workRepository
+     * @param int                            $offset
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/{offset}-offset", name="ajax", methods={"POST"},defaults={"offset"=5})
+     */
+    public function ajax(WorkRepository $workRepository,$offset=5):Response
+    {
+        $works=$workRepository->findBy([],[],6,$offset);
+        return $this->render('work/_ajax.html.twig', ['works' => $works]);
     }
 }
